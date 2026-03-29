@@ -1,0 +1,161 @@
+/* CSS Variablen für Light Mode */
+:root {
+    --primary: #1976d2; 
+    --primary-hover: #1565c0;
+    --bg: #f5f5f5; 
+    --surface: #ffffff; 
+    --text: #212121; 
+    --text-secondary: #757575;
+    --border: #e0e0e0;
+    --btn-bg: transparent;
+    --btn-hover: rgba(0, 0, 0, 0.04);
+    --btn-active: #e3f2fd;
+    --btn-active-text: #1976d2;
+    --danger: #d32f2f; 
+    --danger-hover: #ffebee; 
+    --desk-bg: #e0e0e0; 
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    --shadow-md: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    --shadow-lg: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+/* CSS Variablen für Dark Mode */
+body.dark-mode {
+    --primary: #90caf9;
+    --primary-hover: #82b1ff;
+    --bg: #121212;
+    --surface: #1e1e1e;
+    --text: #e0e0e0;
+    --text-secondary: #aaaaaa;
+    --border: #333333;
+    --btn-hover: rgba(255, 255, 255, 0.08);
+    --btn-active: rgba(144, 202, 249, 0.16);
+    --btn-active-text: #90caf9;
+    --danger: #ef5350;
+    --danger-hover: rgba(239, 83, 80, 0.12);
+    --desk-bg: #2d2d2d; 
+}
+
+body {
+    font-family: 'Roboto', -apple-system, sans-serif;
+    margin: 0; padding: 0;
+    background-color: var(--bg); color: var(--text);
+    display: flex; flex-direction: column; height: 100vh; overflow: hidden;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.toolbar {
+    background-color: var(--surface); padding: 0.75rem 1.5rem;
+    box-shadow: var(--shadow-sm); display: flex; gap: 12px; align-items: center;
+    z-index: 10; flex-wrap: wrap; transition: background-color 0.3s;
+}
+
+.tool-group {
+    display: flex; gap: 4px; border-right: 1px solid var(--border);
+    padding-right: 12px; align-items: center;
+}
+
+button {
+    background-color: var(--btn-bg); color: var(--text); border: none; border-radius: 8px; 
+    padding: 8px 12px; cursor: pointer; font-family: 'Roboto', sans-serif;
+    font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 6px;
+    transition: all 0.2s ease-in-out; white-space: nowrap;
+}
+
+button:hover { background-color: var(--btn-hover); }
+button.active { background-color: var(--btn-active); color: var(--btn-active-text); }
+button.contained { background-color: var(--primary); color: white; box-shadow: var(--shadow-sm); }
+button.contained:hover { background-color: var(--primary-hover); box-shadow: var(--shadow-md); }
+button.danger { color: var(--danger); }
+button.danger:hover { background-color: var(--danger-hover); }
+.icon-btn { padding: 8px; border-radius: 50%; font-size: 1.1rem; }
+
+.dropdown { position: relative; display: inline-block; }
+.dropdown-content {
+    display: none; position: absolute; background-color: var(--surface);
+    min-width: 180px; box-shadow: var(--shadow-md); border-radius: 8px;
+    z-index: 100; top: 100%; left: 0; margin-top: 0px; border: 1px solid var(--border);
+    flex-direction: column; overflow: hidden;
+}
+.dropdown:hover .dropdown-content { display: flex; }
+.dropdown-content a {
+    color: var(--text); padding: 12px 16px; text-decoration: none;
+    font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 10px;
+    transition: background-color 0.2s;
+}
+.dropdown-content a:hover { background-color: var(--btn-hover); }
+
+.info-badge {
+    background-color: var(--btn-active); color: var(--primary); padding: 6px 12px;
+    border-radius: 16px; font-size: 13px; font-weight: 500; display: flex; align-items: center; gap: 5px;
+}
+body.dark-mode .info-badge { background-color: rgba(144, 202, 249, 0.1); }
+
+.canvas-container {
+    flex: 1; overflow: auto; display: flex; justify-content: center; align-items: center;
+    padding: 40px; position: relative; background-color: var(--desk-bg); transition: background-color 0.3s;
+}
+
+canvas { background-color: white !important; cursor: crosshair; border: 1px solid var(--border); }
+
+#inlineTextInput {
+    position: absolute; display: none; z-index: 20; background-color: white; color: #212121;
+    border: 2px solid var(--primary); border-radius: 4px; padding: 6px 10px;
+    font-size: 16px; font-weight: bold; outline: none; box-shadow: var(--shadow-md);
+    resize: both; min-height: 40px; min-width: 150px; font-family: 'Roboto', Arial, sans-serif; white-space: pre;
+}
+
+/* Wichtig für ruckelfreies Pan/Zoom auf dem Canvas */
+#isoCanvas {
+    transform-origin: 0 0;
+    will-change: transform;
+}
+
+.modal-overlay {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.2); /* Transparenz von 0.5 auf 0.2 reduziert */
+    z-index: 40; display: none; 
+    /* backdrop-filter: blur(3px); <--- Diese Zeile komplett löschen */
+}
+.modal {
+    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    background: var(--surface); color: var(--text); padding: 30px; border-radius: 16px;
+    box-shadow: var(--shadow-lg); z-index: 50; min-width: 320px; max-height: 85vh; overflow-y: auto; display: none;
+}
+.modal h2 { 
+    margin-top: 0; color: var(--primary); font-size: 1.25rem; font-weight: 500;
+    margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 15px;
+}
+.color-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; font-weight: 500; font-size: 15px; }
+.color-row input[type="color"] { border: 1px solid var(--border); width: 40px; height: 32px; border-radius: 6px; cursor: pointer; padding: 2px; background: var(--bg); }
+
+/* Sonderteil-Editor Style */
+#miniCanvas { border: 1px solid var(--border); background-color: #f8fafc; border-radius: 8px; cursor: crosshair; display: block; margin: 0 auto; }
+.mini-tools { display: flex; gap: 5px; margin-bottom: 15px; justify-content: center; }
+.mini-tools button { padding: 6px 10px; font-size: 13px; }
+
+#loginOverlay {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background-color: var(--bg); z-index: 9999;
+    display: flex; justify-content: center; align-items: center;
+    backdrop-filter: blur(5px); transition: opacity 0.3s;
+}
+.login-box {
+    background-color: var(--surface); padding: 40px; border-radius: 16px;
+    box-shadow: var(--shadow-lg); text-align: center; width: 100%; max-width: 320px;
+}
+.login-box h2 { margin-top: 0; color: var(--primary); font-weight: 500; }
+.login-box input {
+    width: 100%; padding: 12px; margin: 20px 0; border: 1px solid var(--border);
+    border-radius: 8px; background-color: var(--bg); color: var(--text);
+    font-size: 16px; box-sizing: border-box; outline: none;
+}
+.login-box input:focus { border-color: var(--primary); }
+
+@media print {
+    @page { size: A3 landscape; margin: 0; }
+    .toolbar-container { display: none !important; }
+    body, .canvas-container { background-color: white !important; padding: 0; margin: 0; }
+    canvas { box-shadow: none; border: none; width: 100% !important; height: 100% !important; object-fit: contain; }
+    #inlineTextInput, .modal, .modal-overlay, #loginOverlay, #hintBar { display: none !important; }
+}
