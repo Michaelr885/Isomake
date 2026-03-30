@@ -159,3 +159,42 @@ canvas { background-color: white !important; cursor: crosshair; border: 1px soli
     canvas { box-shadow: none; border: none; width: 100% !important; height: 100% !important; object-fit: contain; }
     #inlineTextInput, .modal, .modal-overlay, #loginOverlay, #hintBar { display: none !important; }
 }
+
+/* --- SEMI-CIRCLE MENU --- */
+#radialMenu {
+    position: fixed;
+    z-index: 10000;
+    display: none;
+    pointer-events: none;
+}
+#radialMenu.active {
+    display: block;
+    pointer-events: auto;
+}
+
+.half-moon-item {
+    position: absolute;
+    width: 46px;
+    height: 46px;
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: var(--shadow-md);
+    transition: all 0.2s ease;
+    /* Der magische Positionierungs-Trick */
+    transform: translate(-50%, -50%) rotate(var(--angle)) translate(90px) rotate(calc(-1 * var(--angle)));
+    left: 50%;
+    top: 50%;
+}
+.half-moon-item:hover {
+    background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
+    color: white;
+    border-color: #1976d2;
+    transform: translate(-50%, -50%) rotate(var(--angle)) translate(90px) rotate(calc(-1 * var(--angle))) scale(1.15);
+    box-shadow: 0 0 15px rgba(25, 118, 210, 0.5);
+}

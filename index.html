@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Isomake V62</title>
+    <title>Isomake V68.2</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -118,6 +118,11 @@
                 <option value="DN 100">DN 100</option>
                 <option value="DN 150">DN 150</option>
             </select>
+        </div>
+        <div class="color-row"><label>Linienstärke:</label>
+            <input type="number" id="propThickness" step="0.5" min="1" max="15"
+                onkeydown="if(event.key === 'Enter') saveAndNextUnmeasuredPipe();"
+                style="padding: 5px; border-radius: 5px; border: 1px solid var(--border); width: 80px;">
         </div>
         <div class="color-row" id="propLengthRow" style="display: none;"><label>Rohrlänge (mm):</label>
             <input type="number" id="propLength" placeholder="z.B. 1500"
@@ -242,6 +247,7 @@
                 <button id="toolDimension" onclick="setTool('dimension')">📏 Maß</button>
                 <button id="toolNumber" onclick="setTool('number')">🏷️ Nr.</button>
                 <button id="toolText" onclick="setTool('text')">🅰️ Text</button>
+                <button id="toolRevisionCloud" onclick="setTool('revisionCloud')">☁️ Wolke</button>
             </div>
 
             <div class="tool-group">
@@ -317,8 +323,27 @@
         <textarea id="inlineTextInput" placeholder="Eingabe... (Shift+Enter für Absatz)"></textarea>
     </div>
 
-    <script src="armaturen.js"></script>
-    <script src="main.js"></script>
+    <!-- Pro-Style Radial Menu -->
+    <div id="radialMenu" class="radial-menu">
+        <div class="half-moon-item" onclick="setTool('pipe')" style="--angle: 180deg;">✏️</div>
+        <div class="half-moon-item" onclick="setTool('flange')" style="--angle: 210deg;">╟</div>
+        <div class="half-moon-item" onclick="setTool('weld')" style="--angle: 240deg;">🔴</div>
+        <div class="half-moon-item" onclick="setTool('weldnum')" style="--angle: 270deg;">🏷️</div>
+        <div class="half-moon-item" onclick="setTool('text')" style="--angle: 300deg;">🅰️</div>
+        <div class="half-moon-item" onclick="setTool('edit')" style="--angle: 330deg;">👆</div>
+        <div class="half-moon-item" onclick="setTool('delete')" style="--angle: 360deg;">🧽</div>
+    </div>
+
+	<script src="isomake_obfuscated.js"></script>
+    <script>
+        // App starten nach dem Laden aller Module
+        window.addEventListener('load', () => {
+            if (typeof redraw === 'function') redraw();
+            if (typeof updateHint === 'function') updateHint();
+            // Startet im Advanced Modus (wie zuvor)
+            if (typeof toggleMode === 'function') toggleMode(); 
+        });
+    </script>
 </body>
 
 </html>
