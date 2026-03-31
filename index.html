@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Isomake V70.1</title>
+    <title>Isomake V73</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -42,6 +42,8 @@
         <div class="color-row"><label>📐 Hintergrund-Raster</label><input type="color" id="colGrid" value="#e2e8f0">
         </div>
         <div class="color-row"><label>🎈 Positionsnummern</label><input type="color" id="colBalloon" value="#1976d2">
+        </div>
+        <div class="color-row"><label>🏷️ Nahtnummern</label><input type="color" id="colWeldNum" value="#0e4781">
         </div>
 
         <div style="display: flex; gap: 10px; margin-top: 20px;">
@@ -106,6 +108,10 @@
     <div id="propModal" class="modal"
         style="min-width: 300px; text-align: center; left: 50px; transform: translateY(-50%);">
         <h2>⚙️ Eigenschaften</h2>
+        <div class="color-row"><label>Bezeichnung (BOM):</label>
+            <input type="text" id="propName" placeholder="Standard"
+                style="padding: 5px; border-radius: 5px; border: 1px solid var(--border); width: 140px;">
+        </div>
         <div class="color-row"><label>Nennweite:</label>
             <select id="propDN" onkeydown="if(event.key === 'Enter') saveAndNextUnmeasuredPipe();"
                 style="padding: 5px; border-radius: 5px; border: 1px solid var(--border);">
@@ -319,6 +325,8 @@
                     Bögen</button>
                 <button id="btnAutoDim" onclick="autoDimension()"
                     title="Rohre mit Längen-Eigenschaft automatisch bemaßen">📏 Auto-Bemaßen</button>
+                <button id="btnAutoWeld" onclick="autoNumberWelds()"
+                    title="Existierende Schweißnähte automatisch durchnummerieren">🔢 Auto-Nähte</button>
                 <button id="btnAutoBalloon" onclick="toggleBalloons()"
                     title="Positions-Nummern (Balloons) zur Stückliste ein-/ausblenden">🎈 Auto-Pos</button>
                 <button onclick="resetPanZoom()" title="Ansicht zurücksetzen">🔍 1:1</button>
