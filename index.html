@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Isomake V68.2</title>
+    <title>Isomake V70.1</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -151,19 +151,68 @@
             style="width: 100%; margin-top: 5px; justify-content: center;">Abbrechen</button>
     </div>
 
-    <div id="bomModal" class="modal" style="min-width: 500px; max-width: 800px;">
+    <div id="textPropModal" class="modal" style="min-width: 300px; text-align: center;">
+        <h2 id="textPropTitle">📝 Text-Eigenschaften</h2>
+        <div class="color-row"><label id="textPropLabel">Inhalt:</label>
+            <input type="text" id="textPropValue" placeholder="Eingabe..."
+                onkeydown="if(event.key === 'Enter') saveTextProperties();"
+                style="padding: 5px; border-radius: 5px; border: 1px solid var(--border); width: 180px;">
+        </div>
+        <div class="color-row" id="textPropSizeRow" style="display: none;"><label>Schriftgröße:</label>
+            <select id="textPropSize" style="padding: 5px; border-radius: 5px; border: 1px solid var(--border);">
+                <option value="12">12 px (Klein)</option>
+                <option value="16">16 px (Standard)</option>
+                <option value="24">24 px (Mittel)</option>
+                <option value="32">32 px (Groß)</option>
+            </select>
+        </div>
+        <button class="contained" onclick="saveTextProperties()"
+            style="width: 100%; margin-top: 20px; justify-content: center;">💾 Speichern</button>
+        <button onclick="closeModals()"
+            style="width: 100%; margin-top: 5px; justify-content: center;">Abbrechen</button>
+    </div>
+
+    <div id="customPropModal" class="modal" style="min-width: 300px; text-align: center;">
+        <h2>✨ Sonderteil-Eigenschaften</h2>
+        <div class="color-row"><label>Nennweite:</label>
+            <select id="customPropDN" style="padding: 5px; border-radius: 5px; border: 1px solid var(--border);">
+                <option value="DN 15">DN 15</option>
+                <option value="DN 20">DN 20</option>
+                <option value="DN 25">DN 25</option>
+                <option value="DN 40">DN 40</option>
+                <option value="DN 50">DN 50</option>
+                <option value="DN 80">DN 80</option>
+                <option value="DN 100">DN 100</option>
+                <option value="DN 150">DN 150</option>
+            </select>
+        </div>
+        <div class="color-row"><label>Skalierung (%):</label>
+            <input type="number" id="customPropScale" step="10" min="10" max="500"
+                onkeydown="if(event.key === 'Enter') saveCustomProperties();"
+                style="padding: 5px; border-radius: 5px; border: 1px solid var(--border); width: 80px;">
+        </div>
+        <button class="contained" onclick="saveCustomProperties()"
+            style="width: 100%; margin-top: 20px; justify-content: center;">💾 Speichern</button>
+        <button onclick="closeModals()"
+            style="width: 100%; margin-top: 5px; justify-content: center;">Abbrechen</button>
+    </div>
+
+    <div id="bomModal" class="modal" style="min-width: 600px; max-width: 900px;">
         <h2 style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-            <span>📋 Stückliste (BOM)</span>
+            <span id="bomModalTitle">📋 Stückliste (BOM)</span>
             <button class="contained" onclick="printBOM()">🖨️ Drucken</button>
         </h2>
         <div id="bomTableContainer" style="max-height: 50vh; overflow-y: auto;">
             <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 14px;">
                 <thead>
                     <tr style="border-bottom: 2px solid var(--border);">
-                        <th style="padding: 8px; text-align: center; color: var(--primary);">Pos.</th>
-                        <th style="padding: 8px;">Bauteil</th>
-                        <th style="padding: 8px;">DN / Größe</th>
-                        <th style="padding: 8px;">Menge / Länge</th>
+                        <th
+                            style="padding: 8px; text-align: center; color: var(--primary); border: 1px solid var(--border);">
+                            Pos.</th>
+                        <th style="padding: 8px; border: 1px solid var(--border);">Bauteil</th>
+                        <th style="padding: 8px; border: 1px solid var(--border);">DN / Größe</th>
+                        <th style="padding: 8px; border: 1px solid var(--border);">Menge / Länge</th>
+                        <th style="padding: 8px; border: 1px solid var(--border);">Chargennummer</th>
                     </tr>
                 </thead>
                 <tbody id="bomTableBody"></tbody>
@@ -334,14 +383,14 @@
         <div class="half-moon-item" onclick="setTool('delete')" style="--angle: 360deg;">🧽</div>
     </div>
 
-	<script src="isomake_obfuscated.js"></script>
+    <script src="isomake_obfuscated.js"></script>
     <script>
         // App starten nach dem Laden aller Module
         window.addEventListener('load', () => {
             if (typeof redraw === 'function') redraw();
             if (typeof updateHint === 'function') updateHint();
             // Startet im Advanced Modus (wie zuvor)
-            if (typeof toggleMode === 'function') toggleMode(); 
+            if (typeof toggleMode === 'function') toggleMode();
         });
     </script>
 </body>
