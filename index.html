@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Isomake V73</title>
+    <title>Isomake V80</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -206,7 +206,11 @@
     <div id="bomModal" class="modal" style="min-width: 600px; max-width: 900px;">
         <h2 style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
             <span id="bomModalTitle">📋 Stückliste (BOM)</span>
-            <button class="contained" onclick="printBOM()">🖨️ Drucken</button>
+            <div style="display: flex; gap: 8px;">
+                <button class="contained" onclick="generateWeldProtocol()"
+                    style="background-color: var(--secondary);">🔢 Naht-Liste</button>
+                <button class="contained" onclick="printBOM()">🖨️ Drucken</button>
+            </div>
         </h2>
         <div id="bomTableContainer" style="max-height: 50vh; overflow-y: auto;">
             <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 14px;">
@@ -226,6 +230,29 @@
         </div>
         <button onclick="closeModals()"
             style="width: 100%; margin-top: 20px; justify-content: center;">Schließen</button>
+    </div>
+
+    <div id="weldModal" class="modal" style="min-width: 500px; max-width: 700px;">
+        <h2 style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <span>🔢 Schweißnaht-Protokoll</span>
+            <button class="contained" onclick="closeModals()">Schließen</button>
+        </h2>
+        <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 10px;">💡 Markieren Sie die Tabelle mit
+            der Maus, um sie direkt in Excel zu kopieren.</p>
+        <div id="weldTableContainer" style="max-height: 60vh; overflow-y: auto;">
+            <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 14px;">
+                <thead>
+                    <tr style="background-color: var(--surface-variant); border-bottom: 2px solid var(--border);">
+                        <th style="padding: 10px; border: 1px solid var(--border); text-align: center; width: 60px;">
+                            Naht</th>
+                        <th style="padding: 10px; border: 1px solid var(--border);">Verbundenes Bauteil</th>
+                        <th style="padding: 10px; border: 1px solid var(--border); text-align: center; width: 80px;">DN
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="weldTableBody"></tbody>
+            </table>
+        </div>
     </div>
 
     <div class="toolbar-container"
