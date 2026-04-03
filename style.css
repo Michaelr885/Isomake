@@ -125,7 +125,9 @@ canvas { background-color: white !important; cursor: crosshair; border: 1px soli
 .modal h2 { 
     margin-top: 0; color: var(--primary); font-size: 1.25rem; font-weight: 500;
     margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 15px;
+    cursor: grab; user-select: none;
 }
+.modal h2:active { cursor: grabbing; }
 .color-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; font-weight: 500; font-size: 15px; }
 .color-row input[type="color"] { border: 1px solid var(--border); width: 40px; height: 32px; border-radius: 6px; cursor: pointer; padding: 2px; background: var(--bg); }
 

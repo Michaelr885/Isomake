@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Isomake V80</title>
+    <title>Isomake Final</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -159,10 +159,15 @@
 
     <div id="textPropModal" class="modal" style="min-width: 300px; text-align: center;">
         <h2 id="textPropTitle">📝 Text-Eigenschaften</h2>
-        <div class="color-row"><label id="textPropLabel">Inhalt:</label>
+        <div class="color-row" id="textPropValueRow"><label id="textPropLabel">Inhalt:</label>
             <input type="text" id="textPropValue" placeholder="Eingabe..."
                 onkeydown="if(event.key === 'Enter') saveTextProperties();"
                 style="padding: 5px; border-radius: 5px; border: 1px solid var(--border); width: 180px;">
+        </div>
+        <div id="textPropJumpboxRow" style="display: none; flex-direction: column; gap: 10px; margin-bottom: 16px;">
+            <div class="color-row" style="margin-bottom: 0;"><label>X (Ost):</label><input type="text" id="textPropJumpboxX" onkeydown="if(event.key === 'Enter') saveTextProperties();" style="padding: 5px; border-radius: 5px; border: 1px solid var(--border); width: 100px;"></div>
+            <div class="color-row" style="margin-bottom: 0;"><label>Y (Nord):</label><input type="text" id="textPropJumpboxY" onkeydown="if(event.key === 'Enter') saveTextProperties();" style="padding: 5px; border-radius: 5px; border: 1px solid var(--border); width: 100px;"></div>
+            <div class="color-row" style="margin-bottom: 0;"><label>Z (Höhe):</label><input type="text" id="textPropJumpboxZ" onkeydown="if(event.key === 'Enter') saveTextProperties();" style="padding: 5px; border-radius: 5px; border: 1px solid var(--border); width: 100px;"></div>
         </div>
         <div class="color-row" id="textPropSizeRow" style="display: none;"><label>Schriftgröße:</label>
             <select id="textPropSize" style="padding: 5px; border-radius: 5px; border: 1px solid var(--border);">
@@ -330,6 +335,7 @@
                 <button id="toolNumber" onclick="setTool('number')">🏷️ Nr.</button>
                 <button id="toolText" onclick="setTool('text')">🅰️ Text</button>
                 <button id="toolRevisionCloud" onclick="setTool('revisionCloud')">☁️ Wolke</button>
+                <button id="toolJumpbox" onclick="setTool('jumpbox')">📦 3D-Box</button>
             </div>
 
             <div class="tool-group">
@@ -418,7 +424,7 @@
         <div class="half-moon-item" onclick="setTool('delete')" style="--angle: 360deg;">🧽</div>
     </div>
 
-	<script src="isomake_obfuscated.js"></script>
+    <script src="isomake_obfuscated.js"></script>
     <script>
         // App starten nach dem Laden aller Module
         window.addEventListener('load', () => {
