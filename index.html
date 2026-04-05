@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Isomake Final</title>
+    <title>Isomake V86 Final</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -165,9 +165,15 @@
                 style="padding: 5px; border-radius: 5px; border: 1px solid var(--border); width: 180px;">
         </div>
         <div id="textPropJumpboxRow" style="display: none; flex-direction: column; gap: 10px; margin-bottom: 16px;">
-            <div class="color-row" style="margin-bottom: 0;"><label>X (Ost):</label><input type="text" id="textPropJumpboxX" onkeydown="if(event.key === 'Enter') saveTextProperties();" style="padding: 5px; border-radius: 5px; border: 1px solid var(--border); width: 100px;"></div>
-            <div class="color-row" style="margin-bottom: 0;"><label>Y (Nord):</label><input type="text" id="textPropJumpboxY" onkeydown="if(event.key === 'Enter') saveTextProperties();" style="padding: 5px; border-radius: 5px; border: 1px solid var(--border); width: 100px;"></div>
-            <div class="color-row" style="margin-bottom: 0;"><label>Z (Höhe):</label><input type="text" id="textPropJumpboxZ" onkeydown="if(event.key === 'Enter') saveTextProperties();" style="padding: 5px; border-radius: 5px; border: 1px solid var(--border); width: 100px;"></div>
+            <div class="color-row" style="margin-bottom: 0;"><label>X (Ost):</label><input type="text"
+                    id="textPropJumpboxX" onkeydown="if(event.key === 'Enter') saveTextProperties();"
+                    style="padding: 5px; border-radius: 5px; border: 1px solid var(--border); width: 100px;"></div>
+            <div class="color-row" style="margin-bottom: 0;"><label>Y (Nord):</label><input type="text"
+                    id="textPropJumpboxY" onkeydown="if(event.key === 'Enter') saveTextProperties();"
+                    style="padding: 5px; border-radius: 5px; border: 1px solid var(--border); width: 100px;"></div>
+            <div class="color-row" style="margin-bottom: 0;"><label>Z (Höhe):</label><input type="text"
+                    id="textPropJumpboxZ" onkeydown="if(event.key === 'Enter') saveTextProperties();"
+                    style="padding: 5px; border-radius: 5px; border: 1px solid var(--border); width: 100px;"></div>
         </div>
         <div class="color-row" id="textPropSizeRow" style="display: none;"><label>Schriftgröße:</label>
             <select id="textPropSize" style="padding: 5px; border-radius: 5px; border: 1px solid var(--border);">
@@ -372,6 +378,8 @@
                         <a href="#" onclick="toggleLayer('texts'); return false;" id="layer_texts">✔️ Texte</a>
                         <a href="#" onclick="toggleLayer('hatches'); return false;" id="layer_hatches">✔️
                             Schraffuren</a>
+                        <a href="#" onclick="toggleLayer('northArrow'); return false;" id="layer_northArrow">✔️
+                            Nordpfeil</a>
                     </div>
                 </div>
             </div>
@@ -424,7 +432,11 @@
         <div class="half-moon-item" onclick="setTool('delete')" style="--angle: 360deg;">🧽</div>
     </div>
 
-    <script src="isomake_obfuscated.js"></script>
+    <script src="armaturen.js"></script>
+    <script src="main.js"></script>
+    <script src="bom.js"></script>
+    <script src="render.js"></script>
+    <script src="ui.js"></script>
     <script>
         // App starten nach dem Laden aller Module
         window.addEventListener('load', () => {
