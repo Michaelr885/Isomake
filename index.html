@@ -266,10 +266,10 @@
         </div>
     </div>
 
-    <div class="toolbar-container"
-        style="background-color: var(--surface); box-shadow: var(--shadow-sm); z-index: 10; position: relative;">
+    <div class="toolbar-container toolbar"
+        style="background-color: var(--surface); box-shadow: var(--shadow-sm); position: relative;">
         <div class="toolbar-row"
-            style="display: flex; align-items: center; padding: 0.5rem 1.5rem; border-bottom: 1px solid var(--border); gap: 10px; min-width: max-content; position: relative; z-index: 20;">
+            style="display: flex; align-items: center; padding: 0.5rem 1.5rem; border-bottom: 1px solid var(--border); gap: 10px; position: relative;">
             <div style="display: flex; align-items: center; margin-right: 15px; user-select: none;">
                 <img src="MR_Logo.png" alt="Isomake Logo"
                     style="height: 36px; width: auto; margin-right: 12px; border-radius: 6px; box-shadow: var(--shadow-sm);">
@@ -303,6 +303,8 @@
                         <a href="#" onclick="setTool('blindcap'); return false;">🛑 Blindkappe</a>
                         <a href="#" onclick="setTool('nipple'); return false;">🔩 Anschweißnippel</a>
                         <a href="#" onclick="setTool('socket'); return false;">🛢️ Anschweißmuffe</a>
+                        <a href="#" onclick="setTool('clamp'); return false;">🔗 Clamp</a>
+                        <a href="#" onclick="setTool('blindclamp'); return false;">🚫 Blind-Clamp</a>
                     </div>
                 </div>
 
@@ -355,10 +357,10 @@
             </div>
         </div>
         <div class="toolbar-row"
-            style="display: flex; align-items: center; padding: 0.5rem 1.5rem; gap: 10px; min-width: max-content; position: relative; z-index: 10;">
+            style="display: flex; align-items: center; padding: 0.5rem 1.5rem; gap: 10px; position: relative;">
             <div class="tool-group">
                 <button id="btnToggleInfo" onclick="toggleSizeInfo()" title="Bauteil-Infos anzeigen">🔍 Info</button>
-                <button id="btnToggleGrid" class="active" onclick="toggleGrid()" title="Raster ausblenden">#
+                <button id="btnToggleGrid" class="active" onclick="toggleGrid()" title="Raster ausblenden [S: Objekt-Snap umschalten]">#
                     Raster</button>
                 <button id="btnToggleElbows" onclick="toggleElbows()" title="Automatische Rohrbögen zeichnen">⤴️
                     Bögen</button>
@@ -368,6 +370,13 @@
                     title="Existierende Schweißnähte automatisch durchnummerieren">🔢 Auto-Nähte</button>
                 <button id="btnAutoBalloon" onclick="toggleBalloons()"
                     title="Positions-Nummern (Balloons) zur Stückliste ein-/ausblenden">🎈 Auto-Pos</button>
+
+                <select id="pipeClassSelect" onchange="changePipeClass()" style="padding: 5px; border-radius: 4px; border: 1px solid var(--border); background: var(--surface); color: var(--text);">
+                    <option value="">Keine Rohrklasse aktiv</option>
+                </select>
+                <button id="btnUploadCSV" class="outlined" onclick="document.getElementById('csvUpload').click()" title="Eigene Rohrklasse hochladen">📂 CSV</button>
+                <input type="file" id="csvUpload" accept=".csv" style="display: none;" onchange="handleCSVUpload(event)">
+
                 <button onclick="resetPanZoom()" title="Ansicht zurücksetzen">🔍 1:1</button>
                 <div class="dropdown">
                     <button id="btnGroupLayers">👁️ Layer ▼</button>
@@ -376,6 +385,7 @@
                             Armaturen</a>
                         <a href="#" onclick="toggleLayer('dims'); return false;" id="layer_dims">✔️ Bemaßungen</a>
                         <a href="#" onclick="toggleLayer('texts'); return false;" id="layer_texts">✔️ Texte</a>
+                        <a href="#" onclick="toggleLayer('cutLengths'); return false;" id="layer_cutLengths">❌ Schnittmaße</a>
                         <a href="#" onclick="toggleLayer('hatches'); return false;" id="layer_hatches">✔️
                             Schraffuren</a>
                         <a href="#" onclick="toggleLayer('northArrow'); return false;" id="layer_northArrow">✔️
@@ -440,6 +450,11 @@
             if (typeof updateHint === 'function') updateHint();
             // Startet im Advanced Modus (wie zuvor)
             if (typeof toggleMode === 'function') toggleMode();
+            
+            // Rohrklassen initialisieren
+            if (typeof loadPipeClassesToUI === 'function' && typeof DEFAULT_PIPE_CLASSES_CSV !== 'undefined') {
+                loadPipeClassesToUI(DEFAULT_PIPE_CLASSES_CSV);
+            }
         });
     </script>
 </body>

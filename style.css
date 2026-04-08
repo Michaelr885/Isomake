@@ -44,11 +44,34 @@ body {
     transition: background-color 0.3s, color 0.3s;
 }
 
-.toolbar {
-    background-color: var(--surface); padding: 0.75rem 1.5rem;
-    box-shadow: var(--shadow-sm); display: flex; gap: 12px; align-items: center;
-    z-index: 10; flex-wrap: wrap; transition: background-color 0.3s;
+.toolbar, .toolbar-container {
+    background-color: var(--surface);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+    transition: background-color 0.3s;
+    position: relative;
+    flex-wrap: wrap;
 }
+
+.toolbar-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 0.5rem 1.5rem;
+    gap: 12px;
+}
+
+/* Scrollbar ausblenden */
+.toolbar, .toolbar-container {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.toolbar::-webkit-scrollbar, .toolbar-container::-webkit-scrollbar {
+    display: none;
+}
+
 
 .tool-group {
     display: flex; gap: 4px; border-right: 1px solid var(--border);
@@ -74,7 +97,7 @@ button.danger:hover { background-color: var(--danger-hover); }
 .dropdown-content {
     display: none; position: absolute; background-color: var(--surface);
     min-width: 180px; box-shadow: var(--shadow-md); border-radius: 8px;
-    z-index: 100; top: 100%; left: 0; margin-top: 0px; border: 1px solid var(--border);
+    z-index: 1001; top: 100%; left: 0; margin-top: 0px; border: 1px solid var(--border);
     flex-direction: column; overflow: hidden;
 }
 .dropdown:hover .dropdown-content { display: flex; }
@@ -92,11 +115,28 @@ button.danger:hover { background-color: var(--danger-hover); }
 body.dark-mode .info-badge { background-color: rgba(144, 202, 249, 0.1); }
 
 .canvas-container {
-    flex: 1; overflow: auto; display: flex; justify-content: center; align-items: center;
-    padding: 40px; position: relative; background-color: var(--desk-bg); transition: background-color 0.3s;
+    flex: 1; 
+    overflow: auto; 
+    display: flex; 
+    justify-content: center; 
+    align-items: flex-start;
+    padding: 40px; 
+    position: relative; 
+    z-index: 1;
+    background-color: var(--desk-bg); 
+    transition: background-color 0.3s;
+    box-sizing: border-box;
 }
 
-canvas { background-color: white !important; cursor: crosshair; border: 1px solid var(--border); }
+
+canvas { 
+    background-color: white !important; 
+    cursor: crosshair; 
+    border: 1px solid var(--border); 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    flex-shrink: 0;
+}
+
 
 #inlineTextInput {
     position: absolute; display: none; z-index: 20; background-color: white; color: #212121;
