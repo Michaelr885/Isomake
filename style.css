@@ -1,97 +1,177 @@
 /* CSS Variablen für Light Mode */
 :root {
-    --primary: #1976d2; 
-    --primary-hover: #1565c0;
-    --bg: #f5f5f5; 
-    --surface: #ffffff; 
-    --text: #212121; 
-    --text-secondary: #757575;
-    --border: #e0e0e0;
-    --btn-bg: transparent;
-    --btn-hover: rgba(0, 0, 0, 0.04);
-    --btn-active: #e3f2fd;
-    --btn-active-text: #1976d2;
-    --danger: #d32f2f; 
-    --danger-hover: #ffebee; 
-    --desk-bg: #e0e0e0; 
-    --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-    --shadow-md: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-    --shadow-lg: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  /* Helles Theme (Standard) */
+  --app-bg: #f1f5f9;         /* Sehr sanftes Grau-Blau für den App-Hintergrund */
+  --panel-bg: #ffffff;       /* Weiß für Werkzeugleisten */
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --text: var(--text-main);
+  --text-secondary: var(--text-muted);
+  --primary: #2563eb;        /* Professionelles Blau */
+  --primary-hover: #1d4ed8;
+  --border: #e2e8f0;
+  --btn-bg: transparent;
+  --btn-hover: rgba(0, 0, 0, 0.04);
+  --btn-active: #e3f2fd;
+  --btn-active-text: #1976d2;
+  --danger: #d32f2f; 
+  --danger-hover: #ffebee; 
+  --surface: var(--panel-bg);
+  --desk-bg: var(--app-bg);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
+  --shadow-canvas: 0 10px 25px -5px rgba(0,0,0,0.1); /* Tiefer Schatten für das "Papier" */
+  --shadow-lg: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  --radius: 8px;
+  
+  /* Fallback legacy vars mapped to logic colors */
+  --grid: #e0e0e0;
+  --balloon: #1976d2;
+  --weldnum: #0e4781;
 }
 
 /* CSS Variablen für Dark Mode */
 body.dark-mode {
-    --primary: #90caf9;
-    --primary-hover: #82b1ff;
-    --bg: #121212;
-    --surface: #1e1e1e;
-    --text: #e0e0e0;
-    --text-secondary: #aaaaaa;
-    --border: #333333;
-    --btn-hover: rgba(255, 255, 255, 0.08);
-    --btn-active: rgba(144, 202, 249, 0.16);
-    --btn-active-text: #90caf9;
-    --danger: #ef5350;
-    --danger-hover: rgba(239, 83, 80, 0.12);
-    --desk-bg: #2d2d2d; 
+  /* Dunkles Theme - Antrazit (VSCode-like) */
+  --app-bg: #1e1e1e;         /* Tiefes Antrazit */
+  --panel-bg: #2d2d2d;       /* Etwas heller für Menüs */
+  --text-main: #f8fafc;
+  --text-muted: #a0a0a0;
+  --text: var(--text-main);
+  --text-secondary: var(--text-muted);
+  --border: #444444;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.5);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.6);
+  --shadow-canvas: 0 0 0 1px #444444, 0 10px 25px -5px rgba(0,0,0,0.8); 
+  
+  --primary: #3b82f6;
+  --primary-hover: #60a5fa;
+  --btn-hover: rgba(255, 255, 255, 0.08);
+  --btn-active: rgba(59, 130, 246, 0.16);
+  --btn-active-text: #60a5fa;
+  --danger: #ef4444;
+  --danger-hover: rgba(239, 68, 68, 0.12);
+  --surface: var(--panel-bg);
+  --desk-bg: var(--app-bg);
 }
 
 body {
-    font-family: 'Roboto', -apple-system, sans-serif;
-    margin: 0; padding: 0;
-    background-color: var(--bg); color: var(--text);
-    display: flex; flex-direction: column; height: 100vh; overflow: hidden;
-    transition: background-color 0.3s, color 0.3s;
+  background-color: var(--app-bg);
+  color: var(--text-main);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  padding: 0; /* Fullscreen für klares Floating-UI */
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  box-sizing: border-box;
+  align-items: center;
+  overflow: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.toolbar, .toolbar-container {
-    background-color: var(--surface);
-    box-shadow: var(--shadow-sm);
-    display: flex;
-    flex-direction: column;
-    z-index: 1000;
-    transition: background-color 0.3s;
-    position: relative;
-    flex-wrap: wrap;
+.floating-panel {
+  position: fixed;
+  background-color: var(--panel-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow-lg);
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 100; /* Stellt sicher, dass sie über dem Canvas schweben */
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-.toolbar-row {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    padding: 0.5rem 1.5rem;
-    gap: 12px;
+/* Verhindert, dass Dropdowns im Advanced Modus zu breit werden und Layouts sprengen */
+.floating-panel select {
+  max-width: 160px;
+  text-overflow: ellipsis;
 }
 
-/* Scrollbar ausblenden */
-.toolbar, .toolbar-container {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-}
-.toolbar::-webkit-scrollbar, .toolbar-container::-webkit-scrollbar {
-    display: none;
+/* Die bestehenden Positionen beibehalten */
+.top-left { top: 20px; left: 20px; }
+.top-right { top: 20px; right: 20px; }
+.top-center { top: 20px; left: 50%; transform: translateX(-50%); }
+
+/* NEU: Die zweite Reihe direkt unter den Zeichenwerkzeugen */
+.top-subcenter { 
+  top: 75px; 
+  left: 50%; 
+  transform: translateX(-50%); 
+  z-index: 99; 
 }
 
+/* NEU: Meta-Links dezent unten links */
+.bottom-left { 
+  bottom: 20px; 
+  left: 20px; 
+  padding: 6px 10px; 
+  opacity: 0.8; 
+}
+.bottom-left:hover { opacity: 1; }
+
+/* NEU: Der Hilfetext direkt über dem Blatt */
+.instruction-pill {
+  position: fixed;
+  top: 135px; 
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--panel-bg);
+  border: 1px solid var(--border);
+  border-radius: 20px; 
+  padding: 6px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  box-shadow: var(--shadow-md);
+  z-index: 98;
+  pointer-events: none; 
+}
 
 .tool-group {
-    display: flex; gap: 4px; border-right: 1px solid var(--border);
-    padding-right: 12px; align-items: center;
+    display: flex; gap: 4px; align-items: center;
+}
+
+.divider {
+  width: 1px;
+  height: 24px;
+  background-color: var(--border);
+  margin: 0 4px;
 }
 
 button {
-    background-color: var(--btn-bg); color: var(--text); border: none; border-radius: 8px; 
-    padding: 8px 12px; cursor: pointer; font-family: 'Roboto', sans-serif;
-    font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 6px;
-    transition: all 0.2s ease-in-out; white-space: nowrap;
+  background-color: transparent;
+  color: var(--text-main);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 6px 10px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex; align-items: center; gap: 6px;
+  white-space: nowrap;
 }
 
-button:hover { background-color: var(--btn-hover); }
-button.active { background-color: var(--btn-active); color: var(--btn-active-text); }
-button.contained { background-color: var(--primary); color: white; box-shadow: var(--shadow-sm); }
-button.contained:hover { background-color: var(--primary-hover); box-shadow: var(--shadow-md); }
-button.danger { color: var(--danger); }
-button.danger:hover { background-color: var(--danger-hover); }
-.icon-btn { padding: 8px; border-radius: 50%; font-size: 1.1rem; }
+button:hover {
+  background-color: var(--border);
+}
+
+button.active, button.selected {
+  background-color: var(--primary);
+  color: #ffffff;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+button.contained { background-color: var(--primary); color: white; border-color: var(--primary); }
+button.contained:hover { background-color: var(--primary-hover); }
+button.danger { color: var(--danger); border-color: var(--border); }
+button.danger:hover { background-color: var(--danger-hover); border-color: var(--danger); }
+.icon-btn { padding: 8px; border-radius: 50%; font-size: 1.1rem; border: none; }
+.icon-btn:hover { background-color: var(--border); }
 
 .dropdown { position: relative; display: inline-block; }
 .dropdown-content {
@@ -119,30 +199,54 @@ body.dark-mode .info-badge { background-color: rgba(144, 202, 249, 0.1); }
     overflow: auto; 
     display: flex; 
     justify-content: center; 
-    align-items: flex-start;
-    padding: 40px; 
+    align-items: center;
+    padding: 0;
     position: relative; 
     z-index: 1;
-    background-color: var(--desk-bg); 
-    transition: background-color 0.3s;
+    background-color: transparent; 
+    width: 100%;
     box-sizing: border-box;
 }
 
-
-canvas { 
-    background-color: white !important; 
-    cursor: crosshair; 
-    border: 1px solid var(--border); 
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    flex-shrink: 0;
+canvas, #isoCanvas {
+  background-color: #ffffff !important; /* MUSS immer weiß sein */
+  border-radius: 4px;
+  box-shadow: var(--shadow-canvas);
+  /* Ein leichter, dunkler Rand hilft im Lightmode als Abgrenzung */
+  border: 1px solid #cbd5e1; 
+  cursor: crosshair; 
+  flex-shrink: 0;
 }
 
+body.dark-mode canvas, 
+body.dark-mode #isoCanvas {
+  border: none !important; /* Im Darkmode reicht der Schatten als Kontrast völlig aus */
+}
+
+button, input, select, textarea, label {
+  font-family: inherit; /* Erbt 'Inter' vom Body */
+}
+
+input, select, textarea {
+  background-color: var(--app-bg);
+  color: var(--text-main);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 8px 12px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
 
 #inlineTextInput {
-    position: absolute; display: none; z-index: 20; background-color: white; color: #212121;
+    position: absolute; display: none; z-index: 20; background-color: white; color: #0f172a;
     border: 2px solid var(--primary); border-radius: 4px; padding: 6px 10px;
-    font-size: 16px; font-weight: bold; outline: none; box-shadow: var(--shadow-md);
-    resize: both; min-height: 40px; min-width: 150px; font-family: 'Roboto', Arial, sans-serif; white-space: pre;
+    font-size: 16px; font-weight: 600; outline: none; box-shadow: var(--shadow-md);
+    resize: both; min-height: 40px; min-width: 150px; font-family: 'Inter', Arial, sans-serif; white-space: pre;
 }
 
 /* Wichtig für ruckelfreies Pan/Zoom auf dem Canvas */
@@ -197,8 +301,19 @@ canvas {
 @media print {
     @page { size: A3 landscape; margin: 0; }
     .toolbar-container { display: none !important; }
-    body, .canvas-container { background-color: white !important; padding: 0; margin: 0; }
-    canvas { box-shadow: none; border: none; width: 100% !important; height: 100% !important; object-fit: contain; }
+    body, .canvas-container { 
+        background-color: white !important; 
+        padding: 0 !important; 
+        margin: 0 !important; 
+        overflow: hidden !important; /* Verhindert das Mitdrucken der Scrollbars */
+    }
+    canvas { 
+        box-shadow: none !important; 
+        border: none !important; 
+        width: 100% !important; 
+        height: 100% !important; 
+        object-fit: contain !important; 
+    }
     #inlineTextInput, .modal, .modal-overlay, #loginOverlay, #hintBar { display: none !important; }
 }
 

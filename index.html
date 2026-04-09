@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Isomake Final</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -266,164 +268,141 @@
         </div>
     </div>
 
-    <div class="toolbar-container toolbar"
-        style="background-color: var(--surface); box-shadow: var(--shadow-sm); position: relative;">
-        <div class="toolbar-row"
-            style="display: flex; align-items: center; padding: 0.5rem 1.5rem; border-bottom: 1px solid var(--border); gap: 10px; position: relative;">
-            <div style="display: flex; align-items: center; margin-right: 15px; user-select: none;">
-                <img src="MR_Logo.png" alt="Isomake Logo"
-                    style="height: 36px; width: auto; margin-right: 12px; border-radius: 6px; box-shadow: var(--shadow-sm);">
-                <h1
-                    style="margin: 0; font-size: 1.25rem; font-weight: 700; color: var(--primary); letter-spacing: 0.5px;">
-                    Isomake</h1>
-            </div>
-
-            <div class="tool-group">
-                <select id="dnSelect" onchange="currentDN = this.value"
-                    style="background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 8px; padding: 6px 10px; font-weight: 500; font-family: 'Roboto', sans-serif; cursor: pointer; margin-right: 5px;">
-                    <option value="DN 15">DN 15</option>
-                    <option value="DN 20">DN 20</option>
-                    <option value="DN 25">DN 25</option>
-                    <option value="DN 40">DN 40</option>
-                    <option value="DN 50" selected>DN 50</option>
-                    <option value="DN 80">DN 80</option>
-                    <option value="DN 100">DN 100</option>
-                    <option value="DN 150">DN 150</option>
-                </select>
-                <button id="btnBOM" onclick="generateBOM()"
-                    style="margin-right: 15px; border: 1px solid var(--primary); color: var(--primary);">📋
-                    Stückliste</button>
-
-                <button id="toolPipe" class="active" onclick="setTool('pipe')">✏️ Rohr</button>
-
-                <div class="dropdown">
-                    <button id="btnGroupFitting">🪈 Formteil ▼</button>
-                    <div class="dropdown-content">
-                        <a href="#" onclick="setTool('reducer'); return false;">🔽 Reduzierung</a>
-                        <a href="#" onclick="setTool('blindcap'); return false;">🛑 Blindkappe</a>
-                        <a href="#" onclick="setTool('nipple'); return false;">🔩 Anschweißnippel</a>
-                        <a href="#" onclick="setTool('socket'); return false;">🛢️ Anschweißmuffe</a>
-                        <a href="#" onclick="setTool('clamp'); return false;">🔗 Clamp</a>
-                        <a href="#" onclick="setTool('blindclamp'); return false;">🚫 Blind-Clamp</a>
-                    </div>
-                </div>
-
-                <button id="toolWeld" onclick="setTool('weld')">🔴 Naht</button>
-                <button id="toolFlange" onclick="setTool('flange')">╟ Flansch</button>
-
-                <div class="dropdown">
-                    <button id="btnGroupValve">⚙️ Armatur ▼</button>
-                    <div class="dropdown-content">
-                        <a href="#" onclick="setTool('valve'); return false;">Ventil</a>
-                        <a href="#" onclick="setTool('3wayvalve'); return false;">3-Wege Ventil</a>
-                        <a href="#" onclick="setTool('damper'); return false;">Klappe</a>
-                        <a href="#" onclick="setTool('checkvalve'); return false;">Rückschlagklappe</a>
-                        <a href="#" onclick="setTool('safetyvalve'); return false;">Sicherheitsventil</a>
-                        <a href="#" onclick="setTool('compensator'); return false;">Kompensator</a>
-                        <a href="#" onclick="setTool('sightglass'); return false;">🔍 Schauglas</a>
-                    </div>
-                </div>
-
-                <div class="dropdown">
-                    <button id="btnGroupExtras">➕ Zusatz ▼</button>
-                    <div class="dropdown-content">
-                        <a href="#" onclick="setTool('flowarrow'); return false;">➡️ Fließrichtung</a>
-                        <a href="#" onclick="setTool('support'); return false;">🗜️ Halterung</a>
-                        <a href="#" onclick="setTool('elevation'); return false;">📐 Höhenkote</a>
-                        <a href="#" onclick="setTool('msr'); return false;">🌡️ MSR</a>
-                    </div>
-                </div>
-
-                <button id="toolCustom" onclick="openCustomModal()"
-                    style="border: 1px dashed var(--primary); color: var(--primary);">✨ Sonderteil</button>
-
-                <button id="toolSlope" onclick="setTool('slope')">📐 Gefälle</button>
-                <button id="toolHatch" onclick="setTool('hatch')">▨ Schraffur</button>
-                <button id="toolDimension" onclick="setTool('dimension')">📏 Maß</button>
-                <button id="toolNumber" onclick="setTool('number')">🏷️ Nr.</button>
-                <button id="toolText" onclick="setTool('text')">🅰️ Text</button>
-                <button id="toolRevisionCloud" onclick="setTool('revisionCloud')">☁️ Wolke</button>
-                <button id="toolJumpbox" onclick="setTool('jumpbox')">📦 3D-Box</button>
-            </div>
-
-            <div class="tool-group">
-                <button id="toolEdit" onclick="setTool('edit')">👆 Bearbeiten</button>
-                <button id="toolColorize" onclick="triggerColorizePicker()">🖌️ Färben</button>
-                <input type="color" id="colorizeInput" style="display:none;" value="#ff0000"
-                    onchange="activateColorizeTool(event)">
-                <button id="toolToggleExisting" onclick="setTool('toggleExisting')">🪄 Bestand/Neu</button>
-                <button id="toolToggleHose" onclick="setTool('toggleHose')">〰️ Schlauch</button>
-                <button id="toolErase" class="danger" onclick="setTool('erase')">🧽 Löschen</button>
-            </div>
+    <!-- Floating Panels -->
+    <div class="floating-panel top-left">
+        <div class="logo-area" style="display:flex; align-items:center; font-weight:700; color:var(--primary); font-size:1.1rem; user-select:none;">
+            <img src="MR_Logo.png" alt="Logo" style="height:24px; margin-right:8px; border-radius:4px;"> Isomake
         </div>
-        <div class="toolbar-row"
-            style="display: flex; align-items: center; padding: 0.5rem 1.5rem; gap: 10px; position: relative;">
-            <div class="tool-group">
-                <button id="btnToggleInfo" onclick="toggleSizeInfo()" title="Bauteil-Infos anzeigen">🔍 Info</button>
-                <button id="btnToggleGrid" class="active" onclick="toggleGrid()" title="Raster ausblenden [S: Objekt-Snap umschalten]">#
-                    Raster</button>
-                <button id="btnToggleElbows" onclick="toggleElbows()" title="Automatische Rohrbögen zeichnen">⤴️
-                    Bögen</button>
-                <button id="btnAutoDim" onclick="autoDimension()"
-                    title="Rohre mit Längen-Eigenschaft automatisch bemaßen">📏 Auto-Bemaßen</button>
-                <button id="btnAutoWeld" onclick="autoNumberWelds()"
-                    title="Existierende Schweißnähte automatisch durchnummerieren">🔢 Auto-Nähte</button>
-                <button id="btnAutoBalloon" onclick="toggleBalloons()"
-                    title="Positions-Nummern (Balloons) zur Stückliste ein-/ausblenden">🎈 Auto-Pos</button>
+        <button id="btnToggleMode" onclick="toggleMode()" title="Wechseln zwischen Basic und Advanced Modus" style="border: 1px solid var(--primary); color: var(--primary); font-weight: bold;">🛠️ Basic Modus</button>
+        <div class="divider"></div>
+        <select id="dnSelect" onchange="currentDN = this.value" style="background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 8px; padding: 6px 10px; font-weight: 500; font-family: inherit; cursor: pointer;">
+            <option value="DN 15">DN 15</option>
+            <option value="DN 20">DN 20</option>
+            <option value="DN 25">DN 25</option>
+            <option value="DN 40">DN 40</option>
+            <option value="DN 50" selected>DN 50</option>
+            <option value="DN 80">DN 80</option>
+            <option value="DN 100">DN 100</option>
+            <option value="DN 150">DN 150</option>
+        </select>
+        <select id="pipeClassSelect" class="advanced-only" onchange="changePipeClass()" style="padding: 5px; border-radius: 4px; border: 1px solid var(--border); background: var(--surface); color: var(--text);">
+            <option value="">Keine Rohrklasse aktiv</option>
+        </select>
+    </div>
 
-                <select id="pipeClassSelect" onchange="changePipeClass()" style="padding: 5px; border-radius: 4px; border: 1px solid var(--border); background: var(--surface); color: var(--text);">
-                    <option value="">Keine Rohrklasse aktiv</option>
-                </select>
-                <button id="btnUploadCSV" class="outlined" onclick="document.getElementById('csvUpload').click()" title="Eigene Rohrklasse hochladen">📂 CSV</button>
-                <input type="file" id="csvUpload" accept=".csv" style="display: none;" onchange="handleCSVUpload(event)">
+    <div class="floating-panel top-right">
+        <button id="btnBOM" onclick="generateBOM()" style="border: 1px solid var(--primary); color: var(--primary);">📋 Stückliste</button>
+        <button id="btnUploadCSV" class="outlined advanced-only" onclick="document.getElementById('csvUpload').click()" title="Eigene Rohrklasse hochladen">📂 CSV</button>
+        <input type="file" id="csvUpload" accept=".csv" style="display: none;" onchange="handleCSVUpload(event)">
+        <div class="divider"></div>
+        <button id="btnLoad" onclick="document.getElementById('fileInput').click()">📂 Laden</button>
+        <input type="file" id="fileInput" accept=".json" style="display: none;" onchange="loadProject(event)">
+        <button id="btnSave" onclick="saveProject()">💾 Speichern</button>
+        <button id="btnPrint" class="contained" onclick="this.blur(); triggerPrint();">🖨️ PDF</button>
+    </div>
 
-                <button onclick="resetPanZoom()" title="Ansicht zurücksetzen">🔍 1:1</button>
-                <div class="dropdown">
-                    <button id="btnGroupLayers">👁️ Layer ▼</button>
-                    <div class="dropdown-content">
-                        <a href="#" onclick="toggleLayer('pipes'); return false;" id="layer_pipes">✔️ Rohre &
-                            Armaturen</a>
-                        <a href="#" onclick="toggleLayer('dims'); return false;" id="layer_dims">✔️ Bemaßungen</a>
-                        <a href="#" onclick="toggleLayer('texts'); return false;" id="layer_texts">✔️ Texte</a>
-                        <a href="#" onclick="toggleLayer('cutLengths'); return false;" id="layer_cutLengths">❌ Schnittmaße</a>
-                        <a href="#" onclick="toggleLayer('hatches'); return false;" id="layer_hatches">✔️
-                            Schraffuren</a>
-                        <a href="#" onclick="toggleLayer('northArrow'); return false;" id="layer_northArrow">✔️
-                            Nordpfeil</a>
-                    </div>
+    <div class="floating-panel top-center">
+        <div class="tool-group">
+            <button id="toolPipe" class="active" onclick="setTool('pipe')">✏️ Rohr</button>
+            <button id="toolToggleHose" onclick="setTool('toggleHose')">〰️ Schlauch</button>
+            <div class="dropdown">
+                <button id="btnGroupFitting">🪈 Formteil ▼</button>
+                <div class="dropdown-content">
+                    <a href="#" onclick="setTool('reducer'); return false;">🔽 Reduzierung</a>
+                    <a href="#" onclick="setTool('blindcap'); return false;">🛑 Blindkappe</a>
+                    <a href="#" onclick="setTool('nipple'); return false;">🔩 Anschweißnippel</a>
+                    <a href="#" onclick="setTool('socket'); return false;">🛢️ Anschweißmuffe</a>
+                    <a href="#" onclick="setTool('clamp'); return false;">🔗 Clamp</a>
+                    <a href="#" onclick="setTool('blindclamp'); return false;">🚫 Blind-Clamp</a>
                 </div>
             </div>
-
-            <button onclick="openColorMenu()">🎨 Farben</button>
-            <button id="btnThemeToggle" class="icon-btn" onclick="toggleTheme()"
-                title="Dark Mode umschalten">🌙</button>
-            <button onclick="openLegal()" style="font-size: 13px; opacity: 0.8;" title="Impressum & Datenschutz">⚖️
-                Rechtliches</button>
-            <button id="btnToggleMode" onclick="toggleMode()" title="Wechseln zwischen Basic und Advanced Modus"
-                style="margin-left: 15px; border: 1px solid var(--primary); color: var(--primary); font-weight: bold;">🛠️
-                Basic Modus</button>
-
-            <div style="flex: 1;"></div>
-
-            <div class="tool-group">
-                <button id="btnUndo" onclick="undo()">↩️ Zurück</button>
-                <button id="btnRedo" onclick="redo()">↪️ Vor</button>
-                <button id="btnClear" class="danger" onclick="clearAll()">🗑️ Alles</button>
+            <button id="toolWeld" onclick="setTool('weld')">🔴 Naht</button>
+            <button id="toolFlange" onclick="setTool('flange')">╟ Flansch</button>
+            <div class="dropdown">
+                <button id="btnGroupValve">⚙️ Armatur ▼</button>
+                <div class="dropdown-content">
+                    <a href="#" onclick="setTool('valve'); return false;">Ventil</a>
+                    <a href="#" onclick="setTool('3wayvalve'); return false;">3-Wege Ventil</a>
+                    <a href="#" onclick="setTool('damper'); return false;">Klappe</a>
+                    <a href="#" onclick="setTool('checkvalve'); return false;">Rückschlagklappe</a>
+                    <a href="#" onclick="setTool('safetyvalve'); return false;">Sicherheitsventil</a>
+                    <a href="#" onclick="setTool('compensator'); return false;">Kompensator</a>
+                    <a href="#" onclick="setTool('sightglass'); return false;">🔍 Schauglas</a>
+                </div>
             </div>
-
-            <div class="tool-group" style="border-right: none;">
-                <button id="btnSave" onclick="saveProject()">💾 Speichern</button>
-                <button id="btnLoad" onclick="document.getElementById('fileInput').click()">📂 Laden</button>
-                <input type="file" id="fileInput" accept=".json" style="display: none;" onchange="loadProject(event)">
+            <div class="dropdown">
+                <button id="btnGroupExtras">➕ Zusatz ▼</button>
+                <div class="dropdown-content">
+                    <a href="#" onclick="setTool('flowarrow'); return false;">➡️ Fließrichtung</a>
+                    <a href="#" onclick="setTool('support'); return false;">🗜️ Halterung</a>
+                    <a href="#" onclick="setTool('elevation'); return false;">📐 Höhenkote</a>
+                    <a href="#" onclick="setTool('msr'); return false;">🌡️ MSR</a>
+                </div>
             </div>
-            <button id="btnPrint" class="contained" onclick="this.blur(); triggerPrint();">🖨️ PDF</button>
+            <button id="toolCustom" onclick="openCustomModal()" style="border: 1px dashed var(--primary); color: var(--primary);">✨ Sonderteil</button>
+        </div>
+        <div class="divider"></div>
+        <div class="tool-group" style="border-right: none; padding-right: 0;">
+            <button id="toolSlope" onclick="setTool('slope')">📐 Gefälle</button>
+            <button id="toolHatch" onclick="setTool('hatch')">▨ Schraffur</button>
+            <button id="toolDimension" onclick="setTool('dimension')">📏 Maß</button>
+            <button id="toolNumber" onclick="setTool('number')">🏷️ Nr.</button>
+            <button id="toolText" onclick="setTool('text')">🅰️ Text</button>
+            <button id="toolRevisionCloud" onclick="setTool('revisionCloud')">☁️ Wolke</button>
+            <button id="toolJumpbox" onclick="setTool('jumpbox')">📦 3D-Box</button>
         </div>
     </div>
 
-    <!-- Hinweis-Leiste: schmal, ganz links unter der Toolbar -->
-    <div id="hintBar"
-        style="background: var(--surface); border-bottom: 1px solid var(--border); padding: 3px 1.5rem; min-height: 26px; display: flex; align-items: center;">
-        <div id="dirHint" class="info-badge" style="display: none; font-size: 12px; padding: 2px 10px;"></div>
+    <div class="floating-panel top-subcenter">
+        <div class="tool-group">
+            <button id="btnUndo" onclick="undo()">↩️ Zurück</button>
+            <button id="btnRedo" onclick="redo()">↪️ Vor</button>
+            <button id="btnClear" class="danger" onclick="clearAll()">🗑️ Alles</button>
+        </div>
+        <div class="divider"></div>
+        <div class="tool-group">
+            <button id="toolEdit" onclick="setTool('edit')">👆 Bearbeiten</button>
+            <button id="toolColorize" onclick="triggerColorizePicker()">🖌️ Färben</button>
+            <button onclick="openColorMenu()">🎨 Farben</button>
+            <input type="color" id="colorizeInput" style="display:none;" value="#ff0000" onchange="activateColorizeTool(event)">
+            <button id="toolToggleExisting" onclick="setTool('toggleExisting')">🪄 Bestand/Neu</button>
+            <button id="toolErase" class="danger" onclick="setTool('erase')">🧽 Löschen</button>
+        </div>
+        <div class="divider"></div>
+        <div class="tool-group">
+            <button id="btnToggleGrid" class="active" onclick="toggleGrid()" title="Raster ausblenden [S: Objekt-Snap umschalten]"># Raster</button>
+            <button id="btnToggleElbows" onclick="toggleElbows()" title="Automatische Rohrbögen zeichnen">⤴️ Bögen</button>
+            <button onclick="resetPanZoom()" title="Ansicht zurücksetzen">🔍 1:1</button>
+            <div class="dropdown advanced-only">
+                <button id="btnGroupLayers">👁️ Layer ▼</button>
+                <div class="dropdown-content">
+                    <a href="#" onclick="toggleLayer('pipes'); return false;" id="layer_pipes">✔️ Rohre & Armaturen</a>
+                    <a href="#" onclick="toggleLayer('dims'); return false;" id="layer_dims">✔️ Bemaßungen</a>
+                    <a href="#" onclick="toggleLayer('texts'); return false;" id="layer_texts">✔️ Texte</a>
+                    <a href="#" onclick="toggleLayer('cutLengths'); return false;" id="layer_cutLengths">❌ Schnittmaße</a>
+                    <a href="#" onclick="toggleLayer('hatches'); return false;" id="layer_hatches">✔️ Schraffuren</a>
+                    <a href="#" onclick="toggleLayer('northArrow'); return false;" id="layer_northArrow">✔️ Nordpfeil</a>
+                </div>
+            </div>
+            <button id="btnThemeToggle" class="icon-btn" onclick="toggleTheme()" title="Dark Mode umschalten">🌙</button>
+        </div>
+        <div class="divider advanced-only"></div>
+        <div class="tool-group advanced-only" style="border-right: none; padding-right: 0;">
+            <button id="btnAutoDim" onclick="autoDimension()" title="Rohre mit Längen-Eigenschaft automatisch bemaßen">📏 Auto-Bemaßen</button>
+            <button id="btnAutoWeld" onclick="autoNumberWelds()" title="Existierende Schweißnähte automatisch durchnummerieren">🔢 Auto-Nähte</button>
+            <button id="btnAutoBalloon" onclick="toggleBalloons()" title="Positions-Nummern (Balloons) zur Stückliste ein-/ausblenden">🎈 Auto-Pos</button>
+        </div>
+    </div>
+
+    <div class="floating-panel bottom-left">
+        <button id="btnToggleInfo" onclick="toggleSizeInfo()" title="Bauteil-Infos anzeigen">🔍 Info</button>
+        <button onclick="openLegal()" title="Impressum & Datenschutz">⚖️ Rechtliches</button>
+    </div>
+
+    <!-- Hinweis-Leiste: schmal, zentriert -->
+    <div id="hintBar" class="instruction-pill"
+        style="display: flex; align-items: center; justify-content: center;">
+        <div id="dirHint" class="info-badge" style="display: none; padding: 0; background: transparent; color: inherit;"></div>
     </div>
 
     <div class="canvas-container" id="canvasWrapper">
