@@ -314,7 +314,7 @@ input:focus, select:focus, textarea:focus {
         height: 100% !important; 
         object-fit: contain !important; 
     }
-    #inlineTextInput, .modal, .modal-overlay, #loginOverlay, #hintBar { display: none !important; }
+    #inlineTextInput, .modal, .modal-overlay, #loginOverlay, #hintBar, .floating-panel, .instruction-pill { display: none !important; }
 }
 
 /* --- SEMI-CIRCLE MENU --- */
