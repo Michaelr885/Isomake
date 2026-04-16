@@ -137,6 +137,24 @@
                 onkeydown="if(event.key === 'Enter') saveAndNextUnmeasuredPipe();"
                 style="padding: 5px; border-radius: 5px; border: 1px solid var(--border); width: 80px;">
         </div>
+        <!-- Smart Jump spezifische Infos -->
+        <div id="propSmartJumpInfo"
+            style="display: none; border-top: 1px solid var(--border); margin-top: 15px; padding-top: 15px;">
+            <p style="font-size: 13px; font-weight: 500; color: var(--primary); margin-bottom: 10px;">Sprung /
+                Versatz Daten</p>
+            <div class="color-row" style="margin-bottom: 5px;">
+                <label style="font-size: 11px;">Deltas (dx/dy/dz):</label>
+                <span id="propSjDeltas" style="font-size: 11px; font-weight: 600;">—</span>
+            </div>
+            <div class="color-row" style="margin-bottom: 5px;">
+                <label style="font-size: 11px;">Winkel α:</label>
+                <span id="propSjAngle" style="font-size: 11px; font-weight: 600;">—</span>
+            </div>
+            <div class="color-row">
+                <label style="font-size: 11px;">Schnittmaß:</label>
+                <span id="propSjCut" style="font-size: 11px; font-weight: 700; color: var(--secondary);">—</span>
+            </div>
+        </div>
         <div class="color-row" id="propDN2Row" style="display: none;"><label>Nennweite 2:</label>
             <select id="propDN2" onkeydown="if(event.key === 'Enter') saveAndNextUnmeasuredPipe();"
                 style="padding: 5px; border-radius: 5px; border: 1px solid var(--border);">
@@ -268,6 +286,43 @@
         </div>
     </div>
 
+    <!-- Smart Jump Modal -->
+    <div id="smartJumpModal" class="modal" style="min-width: 340px; text-align: center;">
+        <h2>🔀 Sprung / Versatz</h2>
+        <p style="font-size: 12px; color: var(--text-secondary); margin-top: -8px; margin-bottom: 12px;">Gib die
+            3D-Deltas ein. Leere Felder = 0 (Etage).</p>
+        <div class="color-row"><label>Delta Nord (dx):</label>
+            <input type="number" id="sjDx" placeholder="mm" oninput="previewSmartJump()"
+                style="padding: 5px; border-radius: 5px; border: 1px solid var(--border); width: 100px;">
+        </div>
+        <div class="color-row"><label>Delta Ost (dy):</label>
+            <input type="number" id="sjDy" placeholder="mm" oninput="previewSmartJump()"
+                style="padding: 5px; border-radius: 5px; border: 1px solid var(--border); width: 100px;">
+        </div>
+        <div class="color-row"><label>Delta Höhe (dz):</label>
+            <input type="number" id="sjDz" placeholder="mm" oninput="previewSmartJump()"
+                style="padding: 5px; border-radius: 5px; border: 1px solid var(--border); width: 100px;">
+        </div>
+        <div id="sjPreview"
+            style="margin-top: 12px; padding: 10px; background: var(--surface-variant, #f5f5f5); border-radius: 8px; font-size: 13px; text-align: left; display: none;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><span>Typ:</span><strong
+                    id="sjTypeLabel">—</strong></div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><span>Rohrlänge
+                    L:</span><strong id="sjLengthLabel">—</strong></div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><span>Winkel
+                    α:</span><strong id="sjAngleLabel">—</strong></div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                <span>Z-Maß:</span><strong id="sjZLabel">—</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between;"><span>Schnittmaß:</span><strong
+                    id="sjCutLabel">—</strong></div>
+        </div>
+        <button class="contained" onclick="saveSmartJump()"
+            style="width: 100%; margin-top: 16px; justify-content: center;">✅ Übernehmen</button>
+        <button onclick="closeModals()"
+            style="width: 100%; margin-top: 5px; justify-content: center;">Abbrechen</button>
+    </div>
+
     <!-- Floating Panels -->
     <div class="floating-panel top-left">
         <div class="logo-area" style="display:flex; align-items:center; font-weight:700; color:var(--primary); font-size:1.1rem; user-select:none;">
@@ -344,7 +399,6 @@
         <div class="divider"></div>
         <div class="tool-group" style="border-right: none; padding-right: 0;">
             <button id="toolSlope" onclick="setTool('slope')">📐 Gefälle</button>
-            <button id="toolHatch" onclick="setTool('hatch')">▨ Schraffur</button>
             <button id="toolDimension" onclick="setTool('dimension')">📏 Maß</button>
             <button id="toolNumber" onclick="setTool('number')">🏷️ Nr.</button>
             <button id="toolText" onclick="setTool('text')">🅰️ Text</button>
@@ -388,6 +442,8 @@
         </div>
         <div class="divider advanced-only"></div>
         <div class="tool-group advanced-only" style="border-right: none; padding-right: 0;">
+            <button id="toolHatch" onclick="setTool('hatch')">▨ Schraffur</button>
+            <button id="toolSmartJump" onclick="openSmartJumpForSelected()" title="Markiertes Rohr als Sprung/Versatz konfigurieren">🔀 Sprung</button>
             <button id="btnAutoDim" onclick="autoDimension()" title="Rohre mit Längen-Eigenschaft automatisch bemaßen">📏 Auto-Bemaßen</button>
             <button id="btnAutoWeld" onclick="autoNumberWelds()" title="Existierende Schweißnähte automatisch durchnummerieren">🔢 Auto-Nähte</button>
             <button id="btnAutoBalloon" onclick="toggleBalloons()" title="Positions-Nummern (Balloons) zur Stückliste ein-/ausblenden">🎈 Auto-Pos</button>
@@ -422,6 +478,7 @@
     </div>
 
     <script src="isomake_bundle.js"></script>
+    <script src="smartJump.js"></script>
     <script>
         // App starten nach dem Laden aller Module
         window.addEventListener('load', () => {
