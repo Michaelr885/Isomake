@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Isomake Final</title>
+    <title>Isomake</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -85,7 +85,7 @@
                 Am Auborn 6B<br>
                 65618 Selters<br><br>
                 <strong>Kontakt:</strong><br>
-                E-Mail: michaelr885@gmail.com<br>
+                E-Mail: kontakt@isomake.de<br>
             </p>
             <hr style="border: 0; border-top: 1px solid var(--border); margin: 15px 0;">
             <h3 style="color: var(--text); margin-bottom: 5px; font-size: 15px;">Datenschutzerklärung</h3>
@@ -168,6 +168,22 @@
                 <option value="DN 150">DN 150</option>
             </select>
         </div>
+        <div class="color-row" id="propRotationRow"
+            style="display: none; flex-direction: column; align-items: stretch; gap: 8px; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border);">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <label style="font-weight: 600;">🔄 Drehung:</label>
+                <div style="display: flex; gap: 5px; align-items: center;">
+                    <input type="number" id="propRotationNum" step="1" min="0" max="360"
+                        oninput="updateRotationLive('num')"
+                        style="width: 55px; padding: 4px; border-radius: 4px; border: 1px solid var(--border);">
+                    <span style="font-size: 13px;">°</span>
+                    <button onclick="resetRotation()"
+                        style="padding: 4px 8px; font-size: 11px; background: var(--surface-variant); border: 1px solid var(--border); border-radius: 4px; cursor: pointer;">Reset</button>
+                </div>
+            </div>
+            <input type="range" id="propRotationSlider" min="0" max="360" step="1"
+                oninput="updateRotationLive('slider')" style="width: 100%; cursor: pointer;">
+        </div>
         <button class="contained" onclick="saveProperties()"
             style="width: 100%; margin-top: 20px; justify-content: center;">💾 Speichern</button>
         <button onclick="saveAndNextUnmeasuredPipe()"
@@ -227,6 +243,22 @@
             <input type="number" id="customPropScale" step="10" min="10" max="500"
                 onkeydown="if(event.key === 'Enter') saveCustomProperties();"
                 style="padding: 5px; border-radius: 5px; border: 1px solid var(--border); width: 80px;">
+        </div>
+        <div class="color-row" id="customPropRotationRow"
+            style="display: flex; flex-direction: column; align-items: stretch; gap: 8px; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border);">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <label style="font-weight: 600;">🔄 Drehung:</label>
+                <div style="display: flex; gap: 5px; align-items: center;">
+                    <input type="number" id="customPropRotationNum" step="1" min="0" max="360"
+                        oninput="updateCustomRotationLive('num')"
+                        style="width: 55px; padding: 4px; border-radius: 4px; border: 1px solid var(--border);">
+                    <span style="font-size: 13px;">°</span>
+                    <button onclick="resetCustomRotation()"
+                        style="padding: 4px 8px; font-size: 11px; background: var(--surface-variant); border: 1px solid var(--border); border-radius: 4px; cursor: pointer;">Reset</button>
+                </div>
+            </div>
+            <input type="range" id="customPropRotationSlider" min="0" max="360" step="1"
+                oninput="updateCustomRotationLive('slider')" style="width: 100%; cursor: pointer;">
         </div>
         <button class="contained" onclick="saveCustomProperties()"
             style="width: 100%; margin-top: 20px; justify-content: center;">💾 Speichern</button>
@@ -325,12 +357,15 @@
 
     <!-- Floating Panels -->
     <div class="floating-panel top-left">
-        <div class="logo-area" style="display:flex; align-items:center; font-weight:700; color:var(--primary); font-size:1.1rem; user-select:none;">
+        <div class="logo-area"
+            style="display:flex; align-items:center; font-weight:700; color:var(--primary); font-size:1.1rem; user-select:none;">
             <img src="MR_Logo.png" alt="Logo" style="height:24px; margin-right:8px; border-radius:4px;"> Isomake
         </div>
-        <button id="btnToggleMode" onclick="toggleMode()" title="Wechseln zwischen Basic und Advanced Modus" style="border: 1px solid var(--primary); color: var(--primary); font-weight: bold;">🛠️ Basic Modus</button>
+        <button id="btnToggleMode" onclick="toggleMode()" title="Wechseln zwischen Basic und Advanced Modus"
+            style="border: 1px solid var(--primary); color: var(--primary); font-weight: bold;">🛠️ Basic Modus</button>
         <div class="divider"></div>
-        <select id="dnSelect" onchange="currentDN = this.value" style="background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 8px; padding: 6px 10px; font-weight: 500; font-family: inherit; cursor: pointer;">
+        <select id="dnSelect" onchange="currentDN = this.value"
+            style="background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 8px; padding: 6px 10px; font-weight: 500; font-family: inherit; cursor: pointer;">
             <option value="DN 15">DN 15</option>
             <option value="DN 20">DN 20</option>
             <option value="DN 25">DN 25</option>
@@ -340,14 +375,17 @@
             <option value="DN 100">DN 100</option>
             <option value="DN 150">DN 150</option>
         </select>
-        <select id="pipeClassSelect" class="advanced-only" onchange="changePipeClass()" style="padding: 5px; border-radius: 4px; border: 1px solid var(--border); background: var(--surface); color: var(--text);">
+        <select id="pipeClassSelect" class="advanced-only" onchange="changePipeClass()"
+            style="padding: 5px; border-radius: 4px; border: 1px solid var(--border); background: var(--surface); color: var(--text);">
             <option value="">Keine Rohrklasse aktiv</option>
         </select>
     </div>
 
     <div class="floating-panel top-right">
-        <button id="btnBOM" onclick="generateBOM()" style="border: 1px solid var(--primary); color: var(--primary);">📋 Stückliste</button>
-        <button id="btnUploadCSV" class="outlined advanced-only" onclick="document.getElementById('csvUpload').click()" title="Eigene Rohrklasse hochladen">📂 CSV</button>
+        <button id="btnBOM" onclick="generateBOM()" style="border: 1px solid var(--primary); color: var(--primary);">📋
+            Stückliste</button>
+        <button id="btnUploadCSV" class="outlined advanced-only" onclick="document.getElementById('csvUpload').click()"
+            title="Eigene Rohrklasse hochladen">📂 CSV</button>
         <input type="file" id="csvUpload" accept=".csv" style="display: none;" onchange="handleCSVUpload(event)">
         <div class="divider"></div>
         <button id="btnLoad" onclick="document.getElementById('fileInput').click()">📂 Laden</button>
@@ -392,9 +430,11 @@
                     <a href="#" onclick="setTool('support'); return false;">🗜️ Halterung</a>
                     <a href="#" onclick="setTool('elevation'); return false;">📐 Höhenkote</a>
                     <a href="#" onclick="setTool('msr'); return false;">🌡️ MSR</a>
+                    <a href="#" onclick="setTool('insulation'); return false;">❄️ Isolierung</a>
                 </div>
             </div>
-            <button id="toolCustom" onclick="openCustomModal()" style="border: 1px dashed var(--primary); color: var(--primary);">✨ Sonderteil</button>
+            <button id="toolCustom" onclick="openCustomModal()"
+                style="border: 1px dashed var(--primary); color: var(--primary);">✨ Sonderteil</button>
         </div>
         <div class="divider"></div>
         <div class="tool-group" style="border-right: none; padding-right: 0;">
@@ -418,14 +458,17 @@
             <button id="toolEdit" onclick="setTool('edit')">👆 Bearbeiten</button>
             <button id="toolColorize" onclick="triggerColorizePicker()">🖌️ Färben</button>
             <button onclick="openColorMenu()">🎨 Farben</button>
-            <input type="color" id="colorizeInput" style="display:none;" value="#ff0000" onchange="activateColorizeTool(event)">
+            <input type="color" id="colorizeInput" style="display:none;" value="#ff0000"
+                onchange="activateColorizeTool(event)">
             <button id="toolToggleExisting" onclick="setTool('toggleExisting')">🪄 Bestand/Neu</button>
             <button id="toolErase" class="danger" onclick="setTool('erase')">🧽 Löschen</button>
         </div>
         <div class="divider"></div>
         <div class="tool-group">
-            <button id="btnToggleGrid" class="active" onclick="toggleGrid()" title="Raster ausblenden [S: Objekt-Snap umschalten]"># Raster</button>
-            <button id="btnToggleElbows" onclick="toggleElbows()" title="Automatische Rohrbögen zeichnen">⤴️ Bögen</button>
+            <button id="btnToggleGrid" class="active" onclick="toggleGrid()"
+                title="Raster ausblenden [S: Objekt-Snap umschalten]"># Raster</button>
+            <button id="btnToggleElbows" onclick="toggleElbows()" title="Automatische Rohrbögen zeichnen">⤴️
+                Bögen</button>
             <button onclick="resetPanZoom()" title="Ansicht zurücksetzen">🔍 1:1</button>
             <div class="dropdown advanced-only">
                 <button id="btnGroupLayers">👁️ Layer ▼</button>
@@ -433,20 +476,27 @@
                     <a href="#" onclick="toggleLayer('pipes'); return false;" id="layer_pipes">✔️ Rohre & Armaturen</a>
                     <a href="#" onclick="toggleLayer('dims'); return false;" id="layer_dims">✔️ Bemaßungen</a>
                     <a href="#" onclick="toggleLayer('texts'); return false;" id="layer_texts">✔️ Texte</a>
-                    <a href="#" onclick="toggleLayer('cutLengths'); return false;" id="layer_cutLengths">❌ Schnittmaße</a>
+                    <a href="#" onclick="toggleLayer('cutLengths'); return false;" id="layer_cutLengths">❌
+                        Schnittmaße</a>
                     <a href="#" onclick="toggleLayer('hatches'); return false;" id="layer_hatches">✔️ Schraffuren</a>
-                    <a href="#" onclick="toggleLayer('northArrow'); return false;" id="layer_northArrow">✔️ Nordpfeil</a>
+                    <a href="#" onclick="toggleLayer('northArrow'); return false;" id="layer_northArrow">✔️
+                        Nordpfeil</a>
                 </div>
             </div>
-            <button id="btnThemeToggle" class="icon-btn" onclick="toggleTheme()" title="Dark Mode umschalten">🌙</button>
+            <button id="btnThemeToggle" class="icon-btn" onclick="toggleTheme()"
+                title="Dark Mode umschalten">🌙</button>
         </div>
         <div class="divider advanced-only"></div>
         <div class="tool-group advanced-only" style="border-right: none; padding-right: 0;">
             <button id="toolHatch" onclick="setTool('hatch')">▨ Schraffur</button>
-            <button id="toolSmartJump" onclick="openSmartJumpForSelected()" title="Markiertes Rohr als Sprung/Versatz konfigurieren">🔀 Sprung</button>
-            <button id="btnAutoDim" onclick="autoDimension()" title="Rohre mit Längen-Eigenschaft automatisch bemaßen">📏 Auto-Bemaßen</button>
-            <button id="btnAutoWeld" onclick="autoNumberWelds()" title="Existierende Schweißnähte automatisch durchnummerieren">🔢 Auto-Nähte</button>
-            <button id="btnAutoBalloon" onclick="toggleBalloons()" title="Positions-Nummern (Balloons) zur Stückliste ein-/ausblenden">🎈 Auto-Pos</button>
+            <button id="toolSmartJump" onclick="openSmartJumpForSelected()"
+                title="Markiertes Rohr als Sprung/Versatz konfigurieren">🔀 Sprung</button>
+            <button id="btnAutoDim" onclick="autoDimension()"
+                title="Rohre mit Längen-Eigenschaft automatisch bemaßen">📏 Auto-Bemaßen</button>
+            <button id="btnAutoWeld" onclick="autoNumberWelds()"
+                title="Existierende Schweißnähte automatisch durchnummerieren">🔢 Auto-Nähte</button>
+            <button id="btnAutoBalloon" onclick="toggleBalloons()"
+                title="Positions-Nummern (Balloons) zur Stückliste ein-/ausblenden">🎈 Auto-Pos</button>
         </div>
     </div>
 
@@ -456,9 +506,9 @@
     </div>
 
     <!-- Hinweis-Leiste: schmal, zentriert -->
-    <div id="hintBar" class="instruction-pill"
-        style="display: flex; align-items: center; justify-content: center;">
-        <div id="dirHint" class="info-badge" style="display: none; padding: 0; background: transparent; color: inherit;"></div>
+    <div id="hintBar" class="instruction-pill" style="display: flex; align-items: center; justify-content: center;">
+        <div id="dirHint" class="info-badge"
+            style="display: none; padding: 0; background: transparent; color: inherit;"></div>
     </div>
 
     <div class="canvas-container" id="canvasWrapper">
@@ -485,7 +535,7 @@
             if (typeof updateHint === 'function') updateHint();
             // Startet im Advanced Modus (wie zuvor)
             if (typeof toggleMode === 'function') toggleMode();
-            
+
             // Rohrklassen initialisieren
             if (typeof loadPipeClassesToUI === 'function' && typeof DEFAULT_PIPE_CLASSES_CSV !== 'undefined') {
                 loadPipeClassesToUI(DEFAULT_PIPE_CLASSES_CSV);
