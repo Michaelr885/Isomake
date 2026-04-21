@@ -1,10 +1,10 @@
 /* CSS Variablen für Light Mode */
 :root {
   /* Helles Theme (Standard) */
-  --app-bg: #f1f5f9;
+  --app-bg: #f8fafc;
   /* Sehr sanftes Grau-Blau für den App-Hintergrund */
-  --panel-bg: #ffffff;
-  /* Weiß für Werkzeugleisten */
+  --panel-bg: rgba(255, 255, 255, 0.75);
+  /* Glassmorphism Weiß */
   --text-main: #0f172a;
   --text-muted: #64748b;
   --text: var(--text-main);
@@ -12,53 +12,53 @@
   --primary: #2563eb;
   /* Professionelles Blau */
   --primary-hover: #1d4ed8;
-  --border: #e2e8f0;
+  --border: rgba(226, 232, 240, 0.8);
   --btn-bg: transparent;
-  --btn-hover: rgba(0, 0, 0, 0.04);
-  --btn-active: #e3f2fd;
-  --btn-active-text: #1976d2;
-  --danger: #d32f2f;
-  --danger-hover: #ffebee;
-  --surface: var(--panel-bg);
+  --btn-hover: rgba(37, 99, 235, 0.08);
+  --btn-active: rgba(37, 99, 235, 0.15);
+  --btn-active-text: #2563eb;
+  --danger: #ef4444;
+  --danger-hover: rgba(239, 68, 68, 0.1);
+  --surface: rgba(255, 255, 255, 0.85);
   --desk-bg: var(--app-bg);
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   --shadow-canvas: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
   /* Tiefer Schatten für das "Papier" */
-  --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-  --radius: 8px;
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --radius: 12px;
 
-  /* Fallback legacy vars mapped to logic colors */
-  --grid: #e0e0e0;
-  --balloon: #1976d2;
-  --weldnum: #0e4781;
+  /* Glassmorphism Specific */
+  --glass-blur: blur(12px);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 /* CSS Variablen für Dark Mode */
 body.dark-mode {
   /* Dunkles Theme - Antrazit (VSCode-like) */
-  --app-bg: #1e1e1e;
-  /* Tiefes Antrazit */
-  --panel-bg: #2d2d2d;
-  /* Etwas heller für Menüs */
+  --app-bg: #0f172a;
+  /* Tiefes Dunkelblau */
+  --panel-bg: rgba(30, 41, 59, 0.7);
+  /* Glassmorphism Dunkel */
   --text-main: #f8fafc;
-  --text-muted: #a0a0a0;
+  --text-muted: #94a3b8;
   --text: var(--text-main);
   --text-secondary: var(--text-muted);
-  --border: #444444;
+  --border: rgba(51, 65, 85, 0.8);
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.6);
-  --shadow-canvas: 0 0 0 1px #444444, 0 10px 25px -5px rgba(0, 0, 0, 0.8);
+  --shadow-canvas: 0 0 0 1px #334155, 0 10px 25px -5px rgba(0, 0, 0, 0.8);
 
   --primary: #3b82f6;
   --primary-hover: #60a5fa;
-  --btn-hover: rgba(255, 255, 255, 0.08);
-  --btn-active: rgba(59, 130, 246, 0.16);
+  --btn-hover: rgba(255, 255, 255, 0.1);
+  --btn-active: rgba(59, 130, 246, 0.2);
   --btn-active-text: #60a5fa;
-  --danger: #ef4444;
-  --danger-hover: rgba(239, 68, 68, 0.12);
-  --surface: var(--panel-bg);
+  --danger: #f87171;
+  --danger-hover: rgba(248, 113, 113, 0.15);
+  --surface: rgba(30, 41, 59, 0.9);
   --desk-bg: var(--app-bg);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 body {
@@ -82,16 +82,33 @@ body {
 .floating-panel {
   position: fixed;
   background-color: var(--panel-bg);
-  border: 1px solid var(--border);
-  border-radius: 12px;
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: var(--glass-border);
+  border-radius: 16px;
   box-shadow: var(--shadow-lg);
-  padding: 8px 12px;
+  padding: 10px 14px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   z-index: 100;
   /* Stellt sicher, dass sie über dem Canvas schweben */
-  transition: background-color 0.3s ease, border-color 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: panelSlideIn 0.5s ease-out;
+}
+
+@keyframes panelSlideIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.top-center, .top-subcenter, .instruction-pill {
+  animation: panelSlideInCenter 0.5s ease-out;
+}
+
+@keyframes panelSlideInCenter {
+  from { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
 }
 
 /* Verhindert, dass Dropdowns im Advanced Modus zu breit werden und Layouts sprengen */
@@ -144,14 +161,18 @@ body {
   left: 50%;
   transform: translateX(-50%);
   background-color: var(--panel-bg);
-  border: 1px solid var(--border);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: var(--glass-border);
   border-radius: 20px;
-  padding: 6px 16px;
+  padding: 6px 18px;
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 600;
   box-shadow: var(--shadow-md);
   z-index: 98;
   pointer-events: none;
+  color: var(--primary);
+  transition: all 0.3s ease;
 }
 
 .tool-group {
@@ -170,21 +191,27 @@ body {
 button {
   background-color: transparent;
   color: var(--text-main);
-  border: 1px solid var(--border);
+  border: 1px solid transparent;
   border-radius: var(--radius);
-  padding: 6px 10px;
+  padding: 8px 12px;
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   white-space: nowrap;
 }
 
 button:hover {
-  background-color: var(--border);
+  background-color: var(--btn-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+button:active {
+  transform: translateY(0) scale(0.96);
 }
 
 button.active,
@@ -192,17 +219,22 @@ button.selected {
   background-color: var(--primary);
   color: #ffffff;
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.25);
+  transform: scale(1.05);
+  z-index: 2;
 }
 
 button.contained {
   background-color: var(--primary);
   color: white;
   border-color: var(--primary);
+  box-shadow: var(--shadow-md);
 }
 
 button.contained:hover {
   background-color: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
 }
 
 button.danger {
@@ -388,15 +420,24 @@ textarea:focus {
   left: 50%;
   transform: translate(-50%, -50%);
   background: var(--surface);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: var(--glass-border);
   color: var(--text);
   padding: 30px;
-  border-radius: 16px;
+  border-radius: 24px;
   box-shadow: var(--shadow-lg);
   z-index: 50;
   min-width: 320px;
   max-height: 85vh;
   overflow-y: auto;
   display: none;
+  animation: modalEntry 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes modalEntry {
+  from { opacity: 0; transform: translate(-50%, -45%) scale(0.95); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
 }
 
 .modal h2 {
@@ -472,13 +513,17 @@ textarea:focus {
 }
 
 .login-box {
-  background-color: var(--surface);
+  background-color: var(--panel-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: var(--glass-border);
   padding: 40px;
-  border-radius: 16px;
+  border-radius: 24px;
   box-shadow: var(--shadow-lg);
   text-align: center;
   width: 100%;
-  max-width: 320px;
+  max-width: 340px;
+  animation: modalEntry 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .login-box h2 {
