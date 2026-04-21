@@ -9,14 +9,14 @@
   --text-muted: #64748b;
   --text: var(--text-main);
   --text-secondary: var(--text-muted);
-  --primary: #2563eb;
-  /* Professionelles Blau */
-  --primary-hover: #1d4ed8;
+  --primary: #498794;
+  /* Gedecktes Teal/Blau-Grau */
+  --primary-hover: #3a6c76;
   --border: rgba(226, 232, 240, 0.8);
   --btn-bg: transparent;
-  --btn-hover: rgba(37, 99, 235, 0.08);
-  --btn-active: rgba(37, 99, 235, 0.15);
-  --btn-active-text: #2563eb;
+  --btn-hover: rgba(73, 135, 148, 0.08);
+  --btn-active: rgba(73, 135, 148, 0.15);
+  --btn-active-text: #498794;
   --danger: #ef4444;
   --danger-hover: rgba(239, 68, 68, 0.1);
   --surface: rgba(255, 255, 255, 0.85);
@@ -36,10 +36,10 @@
 /* CSS Variablen für Dark Mode */
 body.dark-mode {
   /* Dunkles Theme - Antrazit (VSCode-like) */
-  --app-bg: #0f172a;
-  /* Tiefes Dunkelblau */
-  --panel-bg: rgba(30, 41, 59, 0.7);
-  /* Glassmorphism Dunkel */
+  --app-bg: #121212;
+  /* Tiefes Anthrazit (Landingpage-Style) */
+  --panel-bg: rgba(24, 24, 24, 0.7);
+  /* Glassmorphism Dunkelgrau */
   --text-main: #f8fafc;
   --text-muted: #94a3b8;
   --text: var(--text-main);
@@ -49,14 +49,14 @@ body.dark-mode {
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.6);
   --shadow-canvas: 0 0 0 1px #334155, 0 10px 25px -5px rgba(0, 0, 0, 0.8);
 
-  --primary: #3b82f6;
-  --primary-hover: #60a5fa;
+  --primary: #5ba1ae;
+  --primary-hover: #7ebbc5;
   --btn-hover: rgba(255, 255, 255, 0.1);
-  --btn-active: rgba(59, 130, 246, 0.2);
-  --btn-active-text: #60a5fa;
+  --btn-active: rgba(91, 161, 174, 0.2);
+  --btn-active-text: #7ebbc5;
   --danger: #f87171;
   --danger-hover: rgba(248, 113, 113, 0.15);
-  --surface: rgba(30, 41, 59, 0.9);
+  --surface: rgba(30, 30, 30, 0.9);
   --desk-bg: var(--app-bg);
   --glass-border: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -98,17 +98,33 @@ body {
 }
 
 @keyframes panelSlideIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.top-center, .top-subcenter, .instruction-pill {
+.top-center,
+.top-subcenter,
+.instruction-pill {
   animation: panelSlideInCenter 0.5s ease-out;
 }
 
 @keyframes panelSlideInCenter {
-  from { opacity: 0; transform: translateX(-50%) translateY(-10px); }
-  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
 }
 
 /* Verhindert, dass Dropdowns im Advanced Modus zu breit werden und Layouts sprengen */
@@ -219,7 +235,7 @@ button.selected {
   background-color: var(--primary);
   color: #ffffff;
   border-color: var(--primary);
-  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.25);
+  box-shadow: 0 0 0 4px rgba(73, 135, 148, 0.25);
   transform: scale(1.05);
   z-index: 2;
 }
@@ -436,8 +452,15 @@ textarea:focus {
 }
 
 @keyframes modalEntry {
-  from { opacity: 0; transform: translate(-50%, -45%) scale(0.95); }
-  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  from {
+    opacity: 0;
+    transform: translate(-50%, -45%) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
 }
 
 .modal h2 {
@@ -692,17 +715,17 @@ textarea:focus {
 }
 
 /* --- RESPONSIVE FIX FÜR LAPTOPS / KLEINERE BILDSCHIRME --- */
-@media (max-width: 2000px) {
+@media (max-width: 2555px) {
   :root {
     --radius: 6px;
     /* Etwas kompakter */
   }
 
-  /* 1. Die Panels insgesamt verkleinern */
+  /* 1. Die Panels insgesamt skalieren */
   .floating-panel {
     padding: 4px 6px !important;
     gap: 4px !important;
-    /* Wir nutzen scale, um alles proportional zu schrumpfen */
+    /* Wir nutzen scale, um alles proportional zu verändern */
     transform: scale(1.1);
     transform-origin: top;
   }
@@ -770,6 +793,44 @@ textarea:focus {
   }
 }
 
+/* --- NEUE STUFE: Wieder etwas kleiner --- */
+@media (max-width: 2135px) {
+  .floating-panel {
+    transform: scale(1.0);
+  }
+
+  .top-center,
+  .top-subcenter,
+  .instruction-pill {
+    transform: translateX(-50%) scale(1.0) !important;
+  }
+}
+
+/* --- NÄCHSTE STUFE: Noch ein Stück kleiner --- */
+@media (max-width: 1975px) {
+  .floating-panel {
+    transform: scale(0.90);
+  }
+
+  .top-center,
+  .top-subcenter,
+  .instruction-pill {
+    transform: translateX(-50%) scale(0.90) !important;
+  }
+}
+
+/* --- DRITTE STUFE: Noch kleiner --- */
+@media (max-width: 1830px) {
+  .floating-panel {
+    transform: scale(0.85);
+  }
+  .top-center,
+  .top-subcenter,
+  .instruction-pill {
+    transform: translateX(-50%) scale(0.85) !important;
+  }
+}
+
 /* --- EXTREM-FALL (Kleine Laptops / Tablet) --- */
 @media (max-width: 1100px) {
   .floating-panel {
@@ -781,4 +842,88 @@ textarea:focus {
   .instruction-pill {
     transform: translateX(-50%) scale(0.75) !important;
   }
+}
+
+/* --- 3D PREVIEW WINDOW --- */
+.preview-3d-window {
+    position: fixed;
+    bottom: 80px;
+    right: 38px;
+    width: 400px;
+    height: 350px;
+    z-index: 1000;
+    padding: 0 !important;
+    overflow: hidden;
+    resize: both;
+    min-width: 300px;
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    background: rgba(18, 18, 18, 0.85) !important;
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    transition: transform 0.2s ease;
+}
+
+.preview-header {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: move;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-weight: 600;
+    font-size: 13px;
+    user-select: none;
+}
+
+.preview-header span {
+    color: var(--text);
+    opacity: 0.9;
+}
+
+.header-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.refresh-btn, .close-btn {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 5px;
+    transition: color 0.2s, transform 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.refresh-btn:hover {
+    color: var(--primary);
+    transform: rotate(90deg);
+}
+
+.close-btn:hover {
+    color: var(--danger);
+}
+
+#threeJsContainer {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+}
+
+/* Scrollbar für Dark Mode Fenster */
+#threeJsContainer::-webkit-scrollbar {
+    width: 6px;
+}
+
+#threeJsContainer::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
 }

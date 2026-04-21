@@ -9,6 +9,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 </head>
 
 <body>
@@ -497,6 +499,8 @@
                 title="Existierende Schweißnähte automatisch durchnummerieren">🔢 Auto-Nähte</button>
             <button id="btnAutoBalloon" onclick="toggleBalloons()"
                 title="Positions-Nummern (Balloons) zur Stückliste ein-/ausblenden">🎈 Auto-Pos</button>
+            <div class="divider"></div>
+            <button id="toggle3D" title="3D Vorschau aktivieren" onclick="toggle3DPreview()" style="border: 1px solid #498794; color: #498794; font-weight: bold;">📦 3D</button>
         </div>
     </div>
 
@@ -542,6 +546,19 @@
             }
         });
     </script>
+
+    <!-- 3D Preview Window -->
+    <div id="preview3D" class="floating-panel preview-3d-window" style="display: none;">
+        <div class="preview-header" id="preview3DHeader">
+            <span>📦 3D Live Vorschau</span>
+            <div class="header-actions">
+                <button class="refresh-btn" onclick="update3DView()" title="Ansicht aktualisieren">🔄</button>
+                <button class="close-btn" onclick="toggle3DPreview()">✕</button>
+            </div>
+        </div>
+        <div id="threeJsContainer"></div>
+    </div>
+    <script src="3dview.js"></script>
 </body>
 
 </html>
