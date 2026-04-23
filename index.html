@@ -393,6 +393,10 @@
         <button id="btnLoad" onclick="document.getElementById('fileInput').click()">📂 Laden</button>
         <input type="file" id="fileInput" accept=".json" style="display: none;" onchange="loadProject(event)">
         <button id="btnSave" onclick="saveProject()">💾 Speichern</button>
+        <select id="formatSelect" onchange="setPaperFormat(this.value)" style="background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 8px; padding: 6px 10px; font-weight: 500; font-family: inherit; cursor: pointer;">
+            <option value="A4">📄 DIN A4</option>
+            <option value="A3">📜 DIN A3</option>
+        </select>
         <button id="btnPrint" class="contained" onclick="this.blur(); triggerPrint();">🖨️ PDF</button>
     </div>
 
@@ -531,7 +535,12 @@
         <div class="half-moon-item" onclick="setTool('delete')" style="--angle: 360deg;">🧽</div>
     </div>
 
-    <script src="isomake_bundle.js"></script>
+    <script src="armaturen.js"></script>
+    <script src="main.js"></script>
+    <script src="smartJump.js"></script>
+    <script src="bom.js"></script>
+    <script src="render.js"></script>
+    <script src="ui.js"></script>
     <script>
         // App starten nach dem Laden aller Module
         window.addEventListener('load', () => {
