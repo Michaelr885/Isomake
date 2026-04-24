@@ -61,16 +61,27 @@
 
     <div id="customPartModal" class="modal" style="min-width: 400px; text-align: center;">
         <h2>🛠️ Sonderteil zeichnen</h2>
-        <p style="font-size: 13px; color: var(--text-secondary); margin-top: -10px; margin-bottom: 15px;">Zeichne dein
-            Teil. Der Mittelpunkt (Fadenkreuz) ist der spätere Ankerpunkt.</p>
-        <div class="mini-tools">
+        <p style="font-size: 13px; color: var(--text-secondary); margin-top: -10px; margin-bottom: 10px;">Zeichne dein
+            Teil. Der Mittelpunkt (Fadenkreuz) ist der Anker (wie im Iso-Blatt: gleiches Raster, L=30). Im Modus
+            <strong>👆 Wählen</strong> klickst du Formen zum <strong>Verschieben</strong>, <strong>🪣 Füllen</strong>: in die
+            <strong>freie Fläche</strong> tippen (z. B. halber Kreis nach Trennlinie) – erneut tippen entfernt die Füllung.</p>
+        <div class="mini-tools" style="flex-wrap: wrap; justify-content: center; max-width: 400px; margin: 0 auto; gap: 4px;">
             <button id="miniBtnLine" class="active" onclick="setMiniTool('line')">➖ Linie</button>
             <button id="miniBtnRect" onclick="setMiniTool('rect')">🔲 Rechteck</button>
             <button id="miniBtnCircle" onclick="setMiniTool('circle')">⭕ Kreis</button>
             <button id="miniBtnTriangle" onclick="setMiniTool('triangle')">🔺 Dreieck</button>
-            <button class="danger" onclick="clearMiniCanvas()">🧽</button>
+            <button id="miniBtnSelect" onclick="setMiniTool('select')">👆 Wählen</button>
+            <button id="miniBtnFill" onclick="setMiniTool('fill')">🪣 Füllen</button>
+            <button id="miniBtnDeleteOne" onclick="setMiniTool('deleteOne')">🗑️ Eins weg</button>
+            <button class="danger" onclick="clearMiniCanvas()">🧽 Alles weg</button>
         </div>
-        <canvas id="miniCanvas" width="200" height="200"></canvas>
+        <div class="color-row" style="justify-content: center; margin: 8px 0; gap: 8px; align-items: center;">
+            <label for="miniLineWidth" style="font-size: 12px; color: var(--text-secondary);">Linienstärke:</label>
+            <input type="number" id="miniLineWidth" min="1" max="15" step="0.5" value="4"
+                style="width: 64px; padding: 4px; border-radius: 6px; border: 1px solid var(--border);"
+                onchange="if (typeof onMiniLineWidthChange === 'function') onMiniLineWidthChange()">
+        </div>
+        <canvas id="miniCanvas" width="600" height="600" style="max-width: 100%; height: auto; border: 1px solid var(--border); border-radius: 8px;"></canvas>
         <button class="contained" onclick="insertCustomPart()"
             style="width: 100%; margin-top: 20px; justify-content: center;">✅ In Isometrie einfügen</button>
         <button onclick="closeModals()"
@@ -109,8 +120,7 @@
             style="width: 100%; margin-top: 20px; justify-content: center;">Schließen</button>
     </div>
 
-    <div id="propModal" class="modal"
-        style="min-width: 300px; text-align: center; left: 50px; transform: translateY(-50%);">
+    <div id="propModal" class="modal" style="min-width: 300px; text-align: center;">
         <h2>⚙️ Eigenschaften</h2>
         <div class="color-row"><label>Bezeichnung (BOM):</label>
             <input type="text" id="propName" placeholder="Standard"
@@ -384,12 +394,6 @@
     </div>
 
     <div class="floating-panel top-right">
-        <button id="btnBOM" onclick="generateBOM()" style="border: 1px solid var(--primary); color: var(--primary);">📋
-            Stückliste</button>
-        <button id="btnUploadCSV" class="outlined advanced-only" onclick="document.getElementById('csvUpload').click()"
-            title="Eigene Rohrklasse hochladen">📂 CSV</button>
-        <input type="file" id="csvUpload" accept=".csv" style="display: none;" onchange="handleCSVUpload(event)">
-        <div class="divider"></div>
         <button id="btnLoad" onclick="document.getElementById('fileInput').click()">📂 Laden</button>
         <input type="file" id="fileInput" accept=".json" style="display: none;" onchange="loadProject(event)">
         <button id="btnSave" onclick="saveProject()">💾 Speichern</button>
@@ -403,20 +407,8 @@
     <div class="floating-panel top-center">
         <div class="tool-group">
             <button id="toolPipe" class="active" onclick="setTool('pipe')">✏️ Rohr</button>
-            <button id="toolToggleHose" onclick="setTool('toggleHose')">〰️ Schlauch</button>
-            <div class="dropdown">
-                <button id="btnGroupFitting">🪈 Formteil ▼</button>
-                <div class="dropdown-content">
-                    <a href="#" onclick="setTool('reducer'); return false;">🔽 Reduzierung</a>
-                    <a href="#" onclick="setTool('blindcap'); return false;">🛑 Blindkappe</a>
-                    <a href="#" onclick="setTool('nipple'); return false;">🔩 Anschweißnippel</a>
-                    <a href="#" onclick="setTool('socket'); return false;">🛢️ Anschweißmuffe</a>
-                    <a href="#" onclick="setTool('clamp'); return false;">🔗 Clamp</a>
-                    <a href="#" onclick="setTool('blindclamp'); return false;">🚫 Blind-Clamp</a>
-                </div>
-            </div>
-            <button id="toolWeld" onclick="setTool('weld')">🔴 Naht</button>
             <button id="toolFlange" onclick="setTool('flange')">╟ Flansch</button>
+            <button id="toolWeld" onclick="setTool('weld')">🔴 Naht</button>
             <div class="dropdown">
                 <button id="btnGroupValve">⚙️ Armatur ▼</button>
                 <div class="dropdown-content">
@@ -430,6 +422,17 @@
                 </div>
             </div>
             <div class="dropdown">
+                <button id="btnGroupFitting">🪈 Formteil ▼</button>
+                <div class="dropdown-content">
+                    <a href="#" onclick="setTool('reducer'); return false;">🔽 Reduzierung</a>
+                    <a href="#" onclick="setTool('blindcap'); return false;">🛑 Blindkappe</a>
+                    <a href="#" onclick="setTool('nipple'); return false;">🔩 Anschweißnippel</a>
+                    <a href="#" onclick="setTool('socket'); return false;">🛢️ Anschweißmuffe</a>
+                    <a href="#" onclick="setTool('clamp'); return false;">🔗 Clamp</a>
+                    <a href="#" onclick="setTool('blindclamp'); return false;">🚫 Blind-Clamp</a>
+                </div>
+            </div>
+            <div class="dropdown">
                 <button id="btnGroupExtras">➕ Zusatz ▼</button>
                 <div class="dropdown-content">
                     <a href="#" onclick="setTool('flowarrow'); return false;">➡️ Fließrichtung</a>
@@ -439,11 +442,13 @@
                     <a href="#" onclick="setTool('insulation'); return false;">❄️ Isolierung</a>
                 </div>
             </div>
+            <button id="toolToggleHose" onclick="setTool('toggleHose')">〰️ Schlauch</button>
             <button id="toolCustom" onclick="openCustomModal()"
                 style="border: 1px dashed var(--primary); color: var(--primary);">✨ Sonderteil</button>
         </div>
         <div class="divider"></div>
         <div class="tool-group" style="border-right: none; padding-right: 0;">
+            <button id="toolHatch" onclick="setTool('hatch')">▨ Schraffur</button>
             <button id="toolSlope" onclick="setTool('slope')">📐 Gefälle</button>
             <button id="toolDimension" onclick="setTool('dimension')">📏 Maß</button>
             <button id="toolNumber" onclick="setTool('number')">🏷️ Nr.</button>
@@ -494,19 +499,30 @@
         </div>
         <div class="divider advanced-only"></div>
         <div class="tool-group advanced-only" style="border-right: none; padding-right: 0;">
-            <button id="toolHatch" onclick="setTool('hatch')">▨ Schraffur</button>
             <button id="toolSmartJump" onclick="openSmartJumpForSelected()"
-                title="Markiertes Rohr als Sprung/Versatz konfigurieren">🔀 Sprung</button>
+                title="Sprung/Versatz: Rohr oder Sprung-Linie anklicken (erneut klicken zum Abbrechen)">🔀 Sprung</button>
             <button id="btnAutoDim" onclick="autoDimension()"
                 title="Rohre mit Längen-Eigenschaft automatisch bemaßen">📏 Auto-Bemaßen</button>
             <button id="btnAutoWeld" onclick="autoNumberWelds()"
                 title="Existierende Schweißnähte automatisch durchnummerieren">🔢 Auto-Nähte</button>
             <button id="btnAutoBalloon" onclick="toggleBalloons()"
                 title="Positions-Nummern (Balloons) zur Stückliste ein-/ausblenden">🎈 Auto-Pos</button>
-            <div class="divider"></div>
-            <button id="toggle3D" title="3D Vorschau aktivieren" onclick="toggle3DPreview()" style="border: 1px solid #498794; color: #498794; font-weight: bold;">📦 3D</button>
+        </div>
+        <div class="divider"></div>
+        <div class="tool-group">
+            <button id="toggle3D" title="3D Vorschau aktivieren" onclick="toggle3DPreview()"
+                style="border: 1px solid #498794; color: #498794; font-weight: bold;">📦 3D</button>
+        </div>
+        <div class="divider"></div>
+        <div class="tool-group tool-group--bom-csv">
+            <button id="btnBOM" onclick="generateBOM()"
+                style="border: 1px solid var(--primary); color: var(--primary);">📋 Stückliste</button>
+            <button id="btnUploadCSV" class="outlined advanced-only"
+                onclick="document.getElementById('csvUpload').click()"
+                title="Eigene Rohrklasse hochladen">📂 CSV</button>
         </div>
     </div>
+    <input type="file" id="csvUpload" accept=".csv" style="display: none;" onchange="handleCSVUpload(event)">
 
     <div class="floating-panel bottom-left">
         <button id="btnToggleInfo" onclick="toggleSizeInfo()" title="Bauteil-Infos anzeigen">🔍 Info</button>
@@ -562,7 +578,6 @@
         </div>
         <div id="threeJsContainer"></div>
     </div>
-    <script src="3dview.js"></script>
-</body>
+    </body>
 
 </html>
