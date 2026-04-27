@@ -175,6 +175,18 @@ body {
   opacity: 1;
 }
 
+.bottom-left-stack {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+}
+
+.bottom-left-buttons {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
 /* NEU: Der Hilfetext direkt über dem Blatt */
 .instruction-pill {
   position: fixed;

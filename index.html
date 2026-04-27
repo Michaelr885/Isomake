@@ -145,9 +145,11 @@
                 style="padding: 5px; border-radius: 5px; border: 1px solid var(--border); width: 80px;">
         </div>
         <div class="color-row" id="propLengthRow" style="display: none;"><label>Rohrlänge (mm):</label>
-            <input type="number" id="propLength" placeholder="z.B. 1500"
+            <input type="text" inputmode="decimal" id="propLength" placeholder="z.B. 1500 oder 800+400"
+                title="Zahl oder einfache Rechenaufgabe (+ − × ÷), z.B. 1200+350"
                 onkeydown="if(event.key === 'Enter') saveAndNextUnmeasuredPipe();"
-                style="padding: 5px; border-radius: 5px; border: 1px solid var(--border); width: 80px;">
+                onblur="normalizePropLengthInput()"
+                style="padding: 5px; border-radius: 5px; border: 1px solid var(--border); width: 140px;">
         </div>
         <!-- Smart Jump spezifische Infos -->
         <div id="propSmartJumpInfo"
@@ -524,9 +526,13 @@
     </div>
     <input type="file" id="csvUpload" accept=".csv" style="display: none;" onchange="handleCSVUpload(event)">
 
-    <div class="floating-panel bottom-left">
-        <button id="btnToggleInfo" onclick="toggleSizeInfo()" title="Bauteil-Infos anzeigen">🔍 Info</button>
-        <button onclick="openLegal()" title="Impressum & Datenschutz">⚖️ Rechtliches</button>
+    <div class="floating-panel bottom-left bottom-left-stack">
+        <select id="displayCanvasScaleSelect" aria-label="Anzeige-Auflösung (Pixel-Skalierung)"
+            title="Pixel-Skalierung der Zeichenfläche (automatisch oder fest 1×–4×)"></select>
+        <div class="bottom-left-buttons">
+            <button id="btnToggleInfo" onclick="toggleSizeInfo()" title="Bauteil-Infos anzeigen">🔍 Info</button>
+            <button onclick="openLegal()" title="Impressum & Datenschutz">⚖️ Rechtliches</button>
+        </div>
     </div>
 
     <!-- Hinweis-Leiste: schmal, zentriert -->
