@@ -335,8 +335,44 @@
     <!-- Smart Jump Modal -->
     <div id="smartJumpModal" class="modal" style="min-width: 340px; text-align: center;">
         <h2>🔀 Sprung / Versatz</h2>
-        <p style="font-size: 12px; color: var(--text-secondary); margin-top: -8px; margin-bottom: 12px;">Gib die
+        <p style="font-size: 12px; color: var(--text-secondary); margin-top: -8px; margin-bottom: 10px;">Gib die
             3D-Deltas ein. Leere Felder = 0 (Etage).</p>
+        <div class="sj-axis-figure" role="img" aria-label="Richtungsskizze: dx nach Nord, dy nach Ost, dz lotrecht nach oben">
+            <svg class="sj-axis-svg" viewBox="0 0 260 110" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <!-- Kreuz an Papier-Iso (≈30°) ausgerichtet: 30° im Uhrzeigersinn, dz bleibt lotrecht -->
+                <g class="sj-axis-plan" transform="rotate(30 100 58)">
+                <g fill="none" stroke="var(--text-secondary)" stroke-width="1.2" stroke-opacity="0.5">
+                    <line x1="100" y1="58" x2="100" y2="92" />
+                    <line x1="42" y1="58" x2="100" y2="58" />
+                </g>
+                <g fill="none" stroke="var(--text-secondary)" stroke-width="1.35" stroke-opacity="0.9">
+                    <line x1="100" y1="58" x2="100" y2="24" />
+                    <line x1="100" y1="58" x2="160" y2="58" />
+                </g>
+                <g fill="var(--primary)">
+                    <path d="M 100 18 L 95 28 L 105 28 Z" />
+                    <path d="M 168 58 L 158 53.5 L 158 62.5 Z" />
+                </g>
+                <g font-family="Inter, system-ui, sans-serif">
+                    <text x="100" y="15" text-anchor="middle" font-size="11" font-weight="600" fill="var(--text)">N</text>
+                    <text x="100" y="26" text-anchor="middle" font-size="8" fill="var(--text-secondary)">dx</text>
+                    <text x="180" y="55" text-anchor="start" font-size="11" font-weight="600" fill="var(--text)">O</text>
+                    <text x="180" y="66" text-anchor="start" font-size="8" fill="var(--text-secondary)">dy</text>
+                    <text x="32" y="62" text-anchor="end" font-size="8.5" fill="var(--text-secondary)" opacity="0.8">W</text>
+                    <text x="100" y="102" text-anchor="middle" font-size="8.5" fill="var(--text-secondary)" opacity="0.8">S</text>
+                </g>
+                </g>
+                <g fill="none" stroke="var(--primary)" stroke-width="1.5" stroke-linecap="round">
+                    <line x1="215" y1="78" x2="215" y2="30" />
+                </g>
+                <g fill="var(--primary)">
+                    <path d="M 215 24 L 210.5 32 L 219.5 32 Z" />
+                </g>
+                <text x="222" y="55" text-anchor="start" font-size="9.5" font-family="Inter, system-ui, sans-serif" fill="var(--text)">dz</text>
+                <text x="222" y="92" text-anchor="start" font-size="7.5" font-family="Inter, system-ui, sans-serif" fill="var(--text-secondary)">Höhe (3D)</text>
+            </svg>
+            <p class="sj-axis-caption">Grundriss: <strong>dx</strong> entlang Nord/Süd, <strong>dy</strong> entlang West/Ost. <strong>dz</strong> = lotrechte Höhe.</p>
+        </div>
         <div class="color-row"><label>Delta Nord (dx):</label>
             <input type="number" id="sjDx" placeholder="mm" oninput="previewSmartJump()"
                 style="padding: 5px; border-radius: 5px; border: 1px solid var(--border); width: 100px;">
@@ -369,6 +405,57 @@
             style="width: 100%; margin-top: 5px; justify-content: center;">Abbrechen</button>
     </div>
 
+    <div id="helpModal" class="modal help-modal" style="max-width: 520px; display: none; text-align: left;">
+        <h2 style="text-align: center; margin-top: 0;">⌨️ Tastatur &amp; Steuerung</h2>
+        <p class="help-modal-lead">Zusätzlich gelten die Hinweise in der Leiste unten (kontextabhängig). Auf dem Mac: <kbd>⌘</kbd> statt <kbd>Strg</kbd> für Kopieren/Einfügen/Rückgängig.</p>
+        <table class="help-shortcut-table">
+            <tbody>
+                <tr>
+                    <th><kbd>Esc</kbd></th>
+                    <td>Aktive Aktion abbrechen, Texteingabe schließen</td>
+                </tr>
+                <tr>
+                    <th><kbd>F1</kbd> / <kbd>?</kbd></th>
+                    <td>Dieses Hilfefenster öffnen (nicht während Eingabe in Textfeldern)</td>
+                </tr>
+                <tr>
+                    <th><kbd>Leertaste</kbd></th>
+                    <td>Bauteil drehen (soweit laut Werkzeug möglich, z. B. Flansch, Text)</td>
+                </tr>
+                <tr>
+                    <th><kbd>S</kbd></th>
+                    <td>Objektfang (Snap) an/aus – siehe auch Hinweiszeile</td>
+                </tr>
+                <tr>
+                    <th><kbd>Strg</kbd> + <kbd>Z</kbd> / <kbd>Y</kbd></th>
+                    <td>Rückgängig / Wiederholen</td>
+                </tr>
+                <tr>
+                    <th><kbd>Strg</kbd> + <kbd>C</kbd> / <kbd>V</kbd></th>
+                    <td>Ausgewählte Bauteile kopieren / Einfügen (Modus <strong>Bearbeiten</strong>)</td>
+                </tr>
+                <tr>
+                    <th><kbd>Entf</kbd></th>
+                    <td>Markierte Elemente löschen (Modus <strong>Bearbeiten</strong>)</td>
+                </tr>
+                <tr>
+                    <th>Mausrad</th>
+                    <td>Ansicht zoomen (über dem Zeichenfeld)</td>
+                </tr>
+                <tr>
+                    <th>Mittlere Maustaste<br>oder <kbd>Shift</kbd>+<kbd>Alt</kbd>+Linke Maustaste</th>
+                    <td>Ansicht schwenken (Pan)</td>
+                </tr>
+                <tr>
+                    <th><strong>Rechtsklick</strong></th>
+                    <td>Schnellmenü (Radial) mit Werkzeugen</td>
+                </tr>
+            </tbody>
+        </table>
+        <button class="contained" onclick="closeModals()"
+            style="width: 100%; margin-top: 18px; justify-content: center;">Schließen</button>
+    </div>
+
     <!-- Floating Panels -->
     <div class="floating-panel top-left">
         <div class="logo-area"
@@ -396,21 +483,25 @@
     </div>
 
     <div class="floating-panel top-right">
-        <button id="btnLoad" onclick="document.getElementById('fileInput').click()">📂 Laden</button>
+        <button id="btnLoad" type="button" onclick="document.getElementById('fileInput').click()"
+            title="JSON-Plan laden">📂 Laden</button>
         <input type="file" id="fileInput" accept=".json" style="display: none;" onchange="loadProject(event)">
-        <button id="btnSave" onclick="saveProject()">💾 Speichern</button>
-        <select id="formatSelect" onchange="setPaperFormat(this.value)" style="background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 8px; padding: 6px 10px; font-weight: 500; font-family: inherit; cursor: pointer;">
+        <button id="btnSave" type="button" onclick="saveProject()" title="Plan als Datei speichern">💾 Speichern</button>
+        <select id="formatSelect" onchange="setPaperFormat(this.value)" title="Papierformat für PDF &amp; Anzeige"
+            style="background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 8px; padding: 6px 10px; font-weight: 500; font-family: inherit; cursor: pointer;">
             <option value="A4">📄 DIN A4</option>
             <option value="A3">📜 DIN A3</option>
         </select>
-        <button id="btnPrint" class="contained" onclick="this.blur(); triggerPrint();">🖨️ PDF</button>
+        <button id="btnPrint" class="contained" type="button" onclick="this.blur(); triggerPrint();" title="Als PDF drucken / speichern">🖨️ PDF</button>
     </div>
 
     <div class="floating-panel top-center">
         <div class="tool-group">
-            <button id="toolPipe" class="active" onclick="setTool('pipe')">✏️ Rohr</button>
-            <button id="toolFlange" onclick="setTool('flange')">╟ Flansch</button>
-            <button id="toolWeld" onclick="setTool('weld')">🔴 Naht</button>
+            <button id="toolPipe" class="active" type="button" onclick="setTool('pipe')"
+                title="Isometrische Rohrleitungen zeichnen (Eckpunkte)">✏️ Rohr</button>
+            <button id="toolFlange" type="button" onclick="setTool('flange')" title="Flansch setzen (Leertaste: drehen)">╟
+                Flansch</button>
+            <button id="toolWeld" type="button" onclick="setTool('weld')" title="Schweißnaht setzen">🔴 Naht</button>
             <div class="dropdown">
                 <button id="btnGroupValve">⚙️ Armatur ▼</button>
                 <div class="dropdown-content">
@@ -462,13 +553,17 @@
 
     <div class="floating-panel top-subcenter">
         <div class="tool-group">
-            <button id="btnUndo" onclick="undo()">↩️ Zurück</button>
-            <button id="btnRedo" onclick="redo()">↪️ Vor</button>
-            <button id="btnClear" class="danger" onclick="clearAll()">🗑️ Alles</button>
+            <button id="btnUndo" type="button" onclick="undo()"
+                title="Rückgängig (Tastatur: Strg+Z)">↩️ Zurück</button>
+            <button id="btnRedo" type="button" onclick="redo()"
+                title="Wiederholen (Tastatur: Strg+Y)">↪️ Vor</button>
+            <button id="btnClear" class="danger" type="button" onclick="clearAll()" title="Gesamte Zeichnung leeren">🗑️
+                Alles</button>
         </div>
         <div class="divider"></div>
         <div class="tool-group">
-            <button id="toolEdit" onclick="setTool('edit')">👆 Bearbeiten</button>
+            <button id="toolEdit" type="button" onclick="setTool('edit')"
+                title="Bauteile auswählen, verschieben, Eigenschaften (Umschalt+Klick)">👆 Bearbeiten</button>
             <button id="toolColorize" onclick="triggerColorizePicker()">🖌️ Färben</button>
             <button onclick="openColorMenu()">🎨 Farben</button>
             <input type="color" id="colorizeInput" style="display:none;" value="#ff0000"
@@ -531,7 +626,9 @@
             title="Pixel-Skalierung der Zeichenfläche (automatisch oder fest 1×–4×)"></select>
         <div class="bottom-left-buttons">
             <button id="btnToggleInfo" onclick="toggleSizeInfo()" title="Bauteil-Infos anzeigen">🔍 Info</button>
-            <button onclick="openLegal()" title="Impressum & Datenschutz">⚖️ Rechtliches</button>
+            <button type="button" id="btnHelpShortcuts" onclick="openHelpShortcuts()"
+                title="Tastenkürzel (F1 oder ?)" aria-label="Tastaturhilfe anzeigen">⌨️ Hilfe</button>
+            <button onclick="openLegal()" title="Impressum &amp; Datenschutz">⚖️ Rechtliches</button>
         </div>
     </div>
 
@@ -548,13 +645,13 @@
 
     <!-- Pro-Style Radial Menu -->
     <div id="radialMenu" class="radial-menu">
-        <div class="half-moon-item" onclick="setTool('pipe')" style="--angle: 180deg;">✏️</div>
-        <div class="half-moon-item" onclick="setTool('flange')" style="--angle: 210deg;">╟</div>
-        <div class="half-moon-item" onclick="setTool('weld')" style="--angle: 240deg;">🔴</div>
-        <div class="half-moon-item" onclick="setTool('weldnum')" style="--angle: 270deg;">🏷️</div>
-        <div class="half-moon-item" onclick="setTool('text')" style="--angle: 300deg;">🅰️</div>
-        <div class="half-moon-item" onclick="setTool('edit')" style="--angle: 330deg;">👆</div>
-        <div class="half-moon-item" onclick="setTool('delete')" style="--angle: 360deg;">🧽</div>
+        <div class="half-moon-item" role="button" title="Rohr zeichnen" onclick="setTool('pipe')" style="--angle: 180deg;">✏️</div>
+        <div class="half-moon-item" role="button" title="Flansch" onclick="setTool('flange')" style="--angle: 210deg;">╟</div>
+        <div class="half-moon-item" role="button" title="Schweißnaht" onclick="setTool('weld')" style="--angle: 240deg;">🔴</div>
+        <div class="half-moon-item" role="button" title="Naht-Nummer" onclick="setTool('weldnum')" style="--angle: 270deg;">🏷️</div>
+        <div class="half-moon-item" role="button" title="Text" onclick="setTool('text')" style="--angle: 300deg;">🅰️</div>
+        <div class="half-moon-item" role="button" title="Bearbeiten" onclick="setTool('edit')" style="--angle: 330deg;">👆</div>
+        <div class="half-moon-item" role="button" title="Löschen (Radierer)" onclick="setTool('delete')" style="--angle: 360deg;">🧽</div>
     </div>
 
     <script src="isomake_bundle.js"></script>

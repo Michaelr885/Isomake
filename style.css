@@ -863,3 +863,83 @@ textarea:focus {
     background: rgba(255, 255, 255, 0.2);
     border-radius: 10px;
 }
+
+/* Tastaturhilfe-Modal */
+.help-modal .help-modal-lead {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.45;
+    margin: -4px 0 14px 0;
+}
+
+.help-modal kbd,
+.help-shortcut-table kbd {
+    font-family: ui-monospace, "Cascadia Code", "Consolas", monospace;
+    font-size: 12px;
+    font-weight: 600;
+    background: var(--surface-variant, #e8eef3);
+    color: var(--text);
+    padding: 2px 7px;
+    border-radius: 5px;
+    border: 1px solid var(--border);
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+}
+
+body.dark-mode .help-modal kbd,
+body.dark-mode .help-shortcut-table kbd {
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: none;
+}
+
+.help-shortcut-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.help-shortcut-table th,
+.help-shortcut-table td {
+    border-bottom: 1px solid var(--border);
+    padding: 8px 10px;
+    vertical-align: top;
+}
+
+.help-shortcut-table th {
+    text-align: left;
+    width: 38%;
+    color: var(--text);
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.help-shortcut-table tr:last-child th,
+.help-shortcut-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* Smart-Jump: Richtungskreuz (Grundriss + dz) */
+.sj-axis-figure {
+    margin: 0 auto 12px;
+    max-width: 300px;
+    padding: 10px 8px 4px;
+    border-radius: 10px;
+    background: var(--surface-variant, rgba(148, 163, 184, 0.12));
+    border: 1px solid var(--border);
+}
+
+.sj-axis-figure .sj-axis-svg {
+    display: block;
+    width: 100%;
+    max-width: 280px;
+    height: auto;
+    margin: 0 auto;
+}
+
+.sj-axis-caption {
+    font-size: 11px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    margin: 8px 0 0;
+    text-align: center;
+}
