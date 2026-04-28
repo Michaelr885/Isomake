@@ -33,6 +33,8 @@
         </div>
     </div>
 
+    <div id="isomake-app-content" style="display: block;">
+
     <div id="colorModalOverlay" class="modal-overlay" onclick="closeModals()"></div>
 
     <div id="colorModal" class="modal">
@@ -653,7 +655,9 @@
         <div class="half-moon-item" role="button" title="Bearbeiten" onclick="setTool('edit')" style="--angle: 330deg;">👆</div>
         <div class="half-moon-item" role="button" title="Löschen (Radierer)" onclick="setTool('delete')" style="--angle: 360deg;">🧽</div>
     </div>
+    </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="isomake_bundle.js"></script>
     <script>
         // App starten nach dem Laden aller Module
@@ -675,8 +679,9 @@
         <div class="preview-header" id="preview3DHeader">
             <span>📦 3D Live Vorschau</span>
             <div class="header-actions">
-                <button class="refresh-btn" onclick="update3DView()" title="Ansicht aktualisieren">🔄</button>
-                <button class="close-btn" onclick="toggle3DPreview()">✕</button>
+                <button type="button" class="refresh-btn" onclick="update3DView()" title="Ansicht aktualisieren">🔄</button>
+                <button type="button" class="refresh-btn" onclick="export3DToPDF()" title="3D als PDF (scharf, A3/A4 wie Plandruck, hell)">📄</button>
+                <button type="button" class="close-btn" onclick="toggle3DPreview()">✕</button>
             </div>
         </div>
         <div id="threeJsContainer"></div>
