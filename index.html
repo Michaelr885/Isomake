@@ -130,16 +130,7 @@
         </div>
         <div class="color-row"><label>Nennweite:</label>
             <select id="propDN" onkeydown="if(event.key === 'Enter') saveAndNextUnmeasuredPipe();"
-                style="padding: 5px; border-radius: 5px; border: 1px solid var(--border);">
-                <option value="DN 15">DN 15</option>
-                <option value="DN 20">DN 20</option>
-                <option value="DN 25">DN 25</option>
-                <option value="DN 40">DN 40</option>
-                <option value="DN 50">DN 50</option>
-                <option value="DN 80">DN 80</option>
-                <option value="DN 100">DN 100</option>
-                <option value="DN 150">DN 150</option>
-            </select>
+                style="padding: 5px; border-radius: 5px; border: 1px solid var(--border);"></select>
         </div>
         <div class="color-row"><label>Linienstärke:</label>
             <input type="number" id="propThickness" step="0.5" min="1" max="15"
@@ -173,16 +164,7 @@
         </div>
         <div class="color-row" id="propDN2Row" style="display: none;"><label>Nennweite 2:</label>
             <select id="propDN2" onkeydown="if(event.key === 'Enter') saveAndNextUnmeasuredPipe();"
-                style="padding: 5px; border-radius: 5px; border: 1px solid var(--border);">
-                <option value="DN 15">DN 15</option>
-                <option value="DN 20">DN 20</option>
-                <option value="DN 25">DN 25</option>
-                <option value="DN 40">DN 40</option>
-                <option value="DN 50">DN 50</option>
-                <option value="DN 80">DN 80</option>
-                <option value="DN 100">DN 100</option>
-                <option value="DN 150">DN 150</option>
-            </select>
+                style="padding: 5px; border-radius: 5px; border: 1px solid var(--border);"></select>
         </div>
         <div class="color-row" id="propRotationRow"
             style="display: none; flex-direction: column; align-items: stretch; gap: 8px; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border);">
@@ -244,16 +226,7 @@
     <div id="customPropModal" class="modal" style="min-width: 300px; text-align: center;">
         <h2>✨ Sonderteil-Eigenschaften</h2>
         <div class="color-row"><label>Nennweite:</label>
-            <select id="customPropDN" style="padding: 5px; border-radius: 5px; border: 1px solid var(--border);">
-                <option value="DN 15">DN 15</option>
-                <option value="DN 20">DN 20</option>
-                <option value="DN 25">DN 25</option>
-                <option value="DN 40">DN 40</option>
-                <option value="DN 50">DN 50</option>
-                <option value="DN 80">DN 80</option>
-                <option value="DN 100">DN 100</option>
-                <option value="DN 150">DN 150</option>
-            </select>
+            <select id="customPropDN" style="padding: 5px; border-radius: 5px; border: 1px solid var(--border);"></select>
         </div>
         <div class="color-row"><label>Skalierung (%):</label>
             <input type="number" id="customPropScale" step="10" min="10" max="500"
@@ -409,7 +382,7 @@
 
     <div id="helpModal" class="modal help-modal" style="max-width: 520px; display: none; text-align: left;">
         <h2 style="text-align: center; margin-top: 0;">⌨️ Tastatur &amp; Steuerung</h2>
-        <p class="help-modal-lead">Zusätzlich gelten die Hinweise in der Leiste unten (kontextabhängig). Auf dem Mac: <kbd>⌘</kbd> statt <kbd>Strg</kbd> für Kopieren/Einfügen/Rückgängig.</p>
+        <p class="help-modal-lead">Zusätzlich gelten die Hinweise in der Leiste unten (kontextabhängig). Auf dem Mac: <kbd>⌘</kbd> statt <kbd>Strg</kbd> für Kopieren/Einfügen/Rückgängig. Für <strong>Rohr bevorzugen</strong> (überlappende Bauteile) und ähnliche <kbd>Strg</kbd>-Klicks auf der Zeichenfläche die Taste <kbd>Strg</kbd> (<strong>Control</strong>) nutzen — nicht <kbd>⌘</kbd>.</p>
         <table class="help-shortcut-table">
             <tbody>
                 <tr>
@@ -427,6 +400,10 @@
                 <tr>
                     <th><kbd>S</kbd></th>
                     <td>Objektfang (Snap) an/aus – siehe auch Hinweiszeile</td>
+                </tr>
+                <tr>
+                    <th><kbd>Strg</kbd> + <kbd>Linksklick</kbd></th>
+                    <td><strong>Rohr bevorzugen</strong>, wenn mehrere Elemente übereinanderliegen (z. B. Werkzeuge <strong>Wählen</strong>, Radierer, Färben, Bestand/Schlauch). Mac: <kbd>Strg</kbd> = Control-Taste, nicht <kbd>⌘</kbd>. Bei <strong>Flansch</strong> und <strong>Armaturen</strong>: <kbd>Strg</kbd> + Klick auf eine Rohrleitung setzt das Teil in die Linie (Flanschpaar / Aufteilen — siehe Kontext-Hilfe unten).</td>
                 </tr>
                 <tr>
                     <th><kbd>Strg</kbd> + <kbd>Z</kbd> / <kbd>Y</kbd></th>
@@ -468,16 +445,7 @@
             style="border: 1px solid var(--primary); color: var(--primary); font-weight: bold;">🛠️ Basic Modus</button>
         <div class="divider"></div>
         <select id="dnSelect" onchange="currentDN = this.value"
-            style="background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 8px; padding: 6px 10px; font-weight: 500; font-family: inherit; cursor: pointer;">
-            <option value="DN 15">DN 15</option>
-            <option value="DN 20">DN 20</option>
-            <option value="DN 25">DN 25</option>
-            <option value="DN 40">DN 40</option>
-            <option value="DN 50" selected>DN 50</option>
-            <option value="DN 80">DN 80</option>
-            <option value="DN 100">DN 100</option>
-            <option value="DN 150">DN 150</option>
-        </select>
+            style="background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 8px; padding: 6px 10px; font-weight: 500; font-family: inherit; cursor: pointer;"></select>
         <select id="pipeClassSelect" class="advanced-only" onchange="changePipeClass()"
             style="padding: 5px; border-radius: 4px; border: 1px solid var(--border); background: var(--surface); color: var(--text);">
             <option value="">Rohrklasse</option>
@@ -629,6 +597,7 @@
         <select id="displayCanvasScaleSelect" aria-label="Anzeige-Auflösung (Pixel-Skalierung)"
             title="Pixel-Skalierung der Zeichenfläche (automatisch oder fest 1×–4×)"></select>
         <div class="bottom-left-buttons">
+            <button type="button" onclick="loadDemoProject()" title="Beispiel-Zeichnung laden (ISO mit Rohren, Sprung, Ventil …)">📋 Demo</button>
             <button id="btnToggleInfo" onclick="toggleSizeInfo()" title="Bauteil-Infos anzeigen">🔍 Info</button>
             <button type="button" id="btnHelpShortcuts" onclick="openHelpShortcuts()"
                 title="Tastenkürzel (F1 oder ?)" aria-label="Tastaturhilfe anzeigen">⌨️ Hilfe</button>
